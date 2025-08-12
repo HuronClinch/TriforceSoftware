@@ -3,7 +3,7 @@
  */
 package com.mycompany.triforcesoftware;
 
-import com.mycompany.triforcesoftware.fronten.TriforceBackend;
+import com.mycompany.triforcesoftware.frontend.TriforcePanel;
 import com.mycompany.triforcesoftware.utileria.Connect;
 import com.mycompany.triforcesoftware.modelos.participante.ParticipanteCRUD;
 import java.sql.Connection;
@@ -15,7 +15,7 @@ import java.sql.Connection;
 public class Triforce_Software {
     
     public static void main(String[] args) {
-        TriforceBackend panel = new TriforceBackend();
+        TriforcePanel panel = new TriforcePanel();
         panel.setVisible(true);
         
 //        Connection connection;

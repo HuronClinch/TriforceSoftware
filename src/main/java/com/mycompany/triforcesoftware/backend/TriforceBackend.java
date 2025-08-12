@@ -8,6 +8,6 @@ package com.mycompany.triforcesoftware.backend;
  *
  * @author huron_clinch
  */
-public class Triforce {
+public class TriforceBackend {
     
 }

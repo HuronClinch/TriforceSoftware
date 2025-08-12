@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
-package com.mycompany.triforcesoftware.fronten;
+package com.mycompany.triforcesoftware.frontend;
 
 import com.mycompany.triforcesoftware.frontend.participante.ParticipantePanel;
 
@@ -10,14 +10,14 @@ import com.mycompany.triforcesoftware.frontend.participante.ParticipantePanel;
  *
  * @author huron_clinch
  */
-public class TriforceBackend extends javax.swing.JFrame {
+public class TriforcePanel extends javax.swing.JFrame {
 
-    private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(TriforceBackend.class.getName());
+    private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(TriforcePanel.class.getName());
 
     /**
      * Creates new form Triforce
      */
-    public TriforceBackend() {
+    public TriforcePanel() {
         initComponents();
     }
 
