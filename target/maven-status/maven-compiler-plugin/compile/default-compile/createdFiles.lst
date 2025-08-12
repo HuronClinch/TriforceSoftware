@@ -1,0 +1,8 @@
+com/mycompany/triforcesoftware/modelos/participante/ParticipanteCRUD.class
+com/mycompany/triforcesoftware/modelos/evento/Evento.class
+com/mycompany/triforcesoftware/modelos/evento/EventoCRUD.class
+com/mycompany/triforcesoftware/modelos/asistencia/Asistencia.class
+com/mycompany/triforcesoftware/Triforce_Software.class
+com/mycompany/triforcesoftware/utileria/Connect.class
+com/mycompany/triforcesoftware/modelos/asistencia/AsistenciaCRUD.class
+com/mycompany/triforcesoftware/modelos/participante/Participante.class
