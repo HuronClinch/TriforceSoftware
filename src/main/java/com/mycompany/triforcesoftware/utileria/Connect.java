@@ -25,10 +25,12 @@ public class Connect {
 
     public Connection connect() {
         try {
-            connection = DriverManager.getConnection(URL, USER_NAME, PASSWORD);
-            System.out.println("Se creo la coneccion correctamente");
-            System.out.println("Esquema: " + connection.getSchema());
-            System.out.println("Catalogo: " + connection.getCatalog());
+            if (connection == null || connection.isClosed()) {//comprobar si no hay coneccion encendida
+                connection = DriverManager.getConnection(URL, USER_NAME, PASSWORD);
+                System.out.println("Se creo la coneccion correctamente");
+                System.out.println("Esquema: " + connection.getSchema());
+                System.out.println("Catalogo: " + connection.getCatalog());
+            }
             return connection;
         } catch (SQLException e) {//Manejar excepcion
             System.out.println("Error al conectarse");

@@ -3,6 +3,7 @@
  */
 package com.mycompany.triforcesoftware;
 
+import com.mycompany.triforcesoftware.fronten.TriforceBackend;
 import com.mycompany.triforcesoftware.utileria.Connect;
 import com.mycompany.triforcesoftware.modelos.participante.ParticipanteCRUD;
 import java.sql.Connection;
@@ -12,14 +13,16 @@ import java.sql.Connection;
  * @author huron_clinch
  */
 public class Triforce_Software {
-
+    
     public static void main(String[] args) {
-        Connection connection;
-        Connect connect = new Connect();
-        connection = connect.connect();
+        TriforceBackend panel = new TriforceBackend();
+        panel.setVisible(true);
+        
+//        Connection connection;
+//        Connect connect = new Connect();
+//        connection = connect.connect();
 
-        ParticipanteCRUD crearParicipante = new ParticipanteCRUD();
-
+//        ParticipanteCRUD crearParicipante = new ParticipanteCRUD();
 //        //Crear participante
 //        Participante par = new Participante("Norman", "hola", "nuevo mundo", "PorNo@gmail.com");
 //        crearParicipante.crear(connection, par);
