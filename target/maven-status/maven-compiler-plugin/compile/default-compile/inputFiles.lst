@@ -4,6 +4,7 @@
 /home/huron_clinch/Documentos/Universidad/IPC2/TriforceSoftware/src/main/java/com/mycompany/triforcesoftware/backend/participante/ParticipanteBackend.java
 /home/huron_clinch/Documentos/Universidad/IPC2/TriforceSoftware/src/main/java/com/mycompany/triforcesoftware/controladores/ControladorParticipante.java
 /home/huron_clinch/Documentos/Universidad/IPC2/TriforceSoftware/src/main/java/com/mycompany/triforcesoftware/frontend/TriforcePanel.java
+/home/huron_clinch/Documentos/Universidad/IPC2/TriforceSoftware/src/main/java/com/mycompany/triforcesoftware/frontend/evento/EventoPanel.java
 /home/huron_clinch/Documentos/Universidad/IPC2/TriforceSoftware/src/main/java/com/mycompany/triforcesoftware/frontend/participante/ParticipantePanel.java
 /home/huron_clinch/Documentos/Universidad/IPC2/TriforceSoftware/src/main/java/com/mycompany/triforcesoftware/modelos/actividad/Actividad.java
 /home/huron_clinch/Documentos/Universidad/IPC2/TriforceSoftware/src/main/java/com/mycompany/triforcesoftware/modelos/actividad/ActividadCRUD.java

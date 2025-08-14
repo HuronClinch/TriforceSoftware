@@ -5,6 +5,7 @@ com/mycompany/triforcesoftware/modelos/inscripcion/Inscripcion.class
 com/mycompany/triforcesoftware/modelos/asistencia/Asistencia.class
 com/mycompany/triforcesoftware/frontend/TriforcePanel$2.class
 com/mycompany/triforcesoftware/frontend/TriforcePanel.class
+com/mycompany/triforcesoftware/frontend/evento/EventoPanel.class
 com/mycompany/triforcesoftware/utileria/Connect.class
 com/mycompany/triforcesoftware/modelos/actividad/Actividad.class
 com/mycompany/triforcesoftware/backend/participante/ParticipanteBackend.class

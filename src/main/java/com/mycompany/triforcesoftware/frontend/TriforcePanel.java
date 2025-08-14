@@ -19,6 +19,8 @@ public class TriforcePanel extends javax.swing.JFrame {
      */
     public TriforcePanel() {
         initComponents();
+        setLocationRelativeTo(null);
+        setTitle("Triforce");
     }
 
     /**

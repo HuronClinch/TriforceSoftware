@@ -52,8 +52,6 @@ public class ParticipanteBackend {
                 controlador.nuevoParticipante(nombre, tipoParticipante, istitucion, correo);//Ingresar participante en base 
                 JOptionPane.showMessageDialog(null, "Participante creado exitosamente");
             }
-        } else {
-            System.out.println("dato incorrecto");
         }
     }
 

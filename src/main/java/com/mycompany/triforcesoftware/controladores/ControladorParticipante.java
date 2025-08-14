@@ -28,14 +28,17 @@ public class ControladorParticipante {
         ListadoParticipantes();//Obtener el listado de las personas incritas
     }
 
-    public void nuevoParticipante(String campo1, String campo2, String campo3, String campo4) {//Crear participante
+    public boolean nuevoParticipante(String nombre, String tipo, String institucion, String correo) {//Crear participante
         try {
-            Participante participante = new Participante(campo1, campo2, campo3, campo4);//Crear Personaje
+            Participante participante = new Participante(nombre, tipo, institucion, correo);//Crear Personaje
             CRUD.crear(CONNECTION, participante);//Agregar participante
             CONNECTION.close();
+
+            return true;
         } catch (SQLException e) {
             System.out.println("Eror en crear participante");
             e.printStackTrace();
+            return false;
         }
     }
 
