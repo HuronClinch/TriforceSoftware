@@ -4,6 +4,11 @@
  */
 package com.mycompany.triforcesoftware.frontend.evento;
 
+import javax.swing.JComboBox;
+import javax.swing.JFormattedTextField;
+import javax.swing.JSpinner;
+import javax.swing.JTextField;
+
 /**
  *
  * @author huron_clinch
@@ -215,4 +220,32 @@ public class EventoPanel extends javax.swing.JInternalFrame {
     private javax.swing.JTextField titulo;
     private javax.swing.JTextField ubicacion;
     // End of variables declaration//GEN-END:variables
+
+    public JSpinner getCodigo() {
+        return codigo;
+    }
+
+    public JSpinner getCosto() {
+        return costo;
+    }
+
+    public JSpinner getCupoMaximo() {
+        return cupoMaximo;
+    }
+
+    public JFormattedTextField getFecha() {
+        return fecha;
+    }
+
+    public JComboBox<String> getTipo() {
+        return tipo;
+    }
+
+    public JTextField getTitulo() {
+        return titulo;
+    }
+
+    public JTextField getUbicacion() {
+        return ubicacion;
+    }
 }
