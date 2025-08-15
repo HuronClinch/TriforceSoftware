@@ -21,9 +21,9 @@ public class EventoCRUD {
     private static final String CREAR = "INSERT INTO evento "
             + "(codigo_evento, fecha_evento, tipo_evento, titulo_evento, ubicacion, cupo_maximo, costo_inscripcion) "
             + "VALUES (?, STR_TO_DATE(?, '%d/%m/%Y'), ?, ?, ?, ?, ?)";
-    private static final String LEER_TABLA = "UPDATE evento SET "
-            + "fecha_evento=STR_TO_DATE(?, '%d/%m/%Y'), tipo_evento=?, titulo_evento=?, ubicacion=?, cupo_maximo=?, costo_inscripcion=? "
-            + "WHERE codigo_evento=?";
+    private static final String LEER_TABLA = "SELECT "
+            + "codigo_evento, DATE_FORMAT(fecha_evento, '%d/%m/%Y') AS fecha_evento, tipo_evento, titulo_evento, ubicacion, cupo_maximo, costo_inscripcion "
+            + "FROM evento";
     private static final String ACTUALIZAR = "UPDATE evento SET "
             + "fecha_evento=STR_TO_DATE(?, '%d/%m/%Y'), tipo_evento=?, titulo_evento=?, ubicacion=?, cupo_maximo=?, costo_inscripcion=? "
             + "WHERE codigo_evento=?";

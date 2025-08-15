@@ -30,7 +30,9 @@ public class EventoBackend {
 
     public void comprobarDatos() throws SQLException {//Comprobar si los datos esta ingresados correctamente
         String codigo = "EVT-" + (int) PANEL.getCodigo().getValue();//Codigo evento
-
+        if (!comprobarCampofecha(PANEL.getFecha().getDate())) {//Comproabr si ingreso fecha
+            return;
+        }
         SimpleDateFormat formatoDate = new SimpleDateFormat("dd/MM/yyyy");
         String fechaStr = formatoDate.format(PANEL.getFecha().getDate());//Fecha valida
         String tipo = PANEL.getTipo().getItemAt(PANEL.getTipo().getSelectedIndex());//Tipo evneto
@@ -62,6 +64,14 @@ public class EventoBackend {
                 JOptionPane.showMessageDialog(null, "Codigo no valido, ya existe");
                 return false;
             }
+        }
+        return true;
+    }
+
+    private boolean comprobarCampofecha(Date fechaComprobar) {
+        if (fechaComprobar == null) {
+            JOptionPane.showMessageDialog(null, "No ingreso fecha");
+            return false;
         }
         return true;
     }
