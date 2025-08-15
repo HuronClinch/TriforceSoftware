@@ -4,8 +4,10 @@
  */
 package com.mycompany.triforcesoftware.frontend.evento;
 
+import com.mycompany.triforcesoftware.backend.evento.EventoBackend;
+import com.toedter.calendar.JDateChooser;
+import java.sql.SQLException;
 import javax.swing.JComboBox;
-import javax.swing.JFormattedTextField;
 import javax.swing.JSpinner;
 import javax.swing.JTextField;
 
@@ -15,11 +17,15 @@ import javax.swing.JTextField;
  */
 public class EventoPanel extends javax.swing.JInternalFrame {
 
+    private final EventoBackend BACKEND = new EventoBackend(this);
+
     /**
      * Creates new form EventoPanel
      */
     public EventoPanel() {
         initComponents();
+        BACKEND.datos();//Formato tipo
+        BACKEND.limiteFechas();//Definir limite para JDateChooser
     }
 
     /**
@@ -35,7 +41,6 @@ public class EventoPanel extends javax.swing.JInternalFrame {
         jLabel1 = new javax.swing.JLabel();
         codigo = new javax.swing.JSpinner();
         jLabel2 = new javax.swing.JLabel();
-        fecha = new javax.swing.JFormattedTextField();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         tipo = new javax.swing.JComboBox<>();
@@ -48,6 +53,7 @@ public class EventoPanel extends javax.swing.JInternalFrame {
         jLabel8 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
         costo = new javax.swing.JSpinner();
+        fecha = new com.toedter.calendar.JDateChooser();
         jPanel2 = new javax.swing.JPanel();
         jLabel9 = new javax.swing.JLabel();
 
@@ -61,27 +67,32 @@ public class EventoPanel extends javax.swing.JInternalFrame {
 
         jLabel2.setText("EVT-");
 
-        fecha.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter(new java.text.SimpleDateFormat("d/M/yyyy"))));
-
         jLabel3.setText("Fecha evento");
 
         jLabel4.setText("Tipo evento");
-
-        tipo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
         jLabel5.setText("Titulo del evento");
 
         jLabel6.setText("Ubicacion");
 
-        cupoMaximo.setModel(new javax.swing.SpinnerNumberModel(10, 10, 99999999, 1));
+        cupoMaximo.setModel(new javax.swing.SpinnerNumberModel(10, 10, 1000, 1));
 
         jLabel7.setText("Cupo maximo");
 
         jLabel8.setText("Costo de inscripcion");
 
         jButton1.setText("Ingresar");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
-        costo.setModel(new javax.swing.SpinnerNumberModel(11.0d, 10.0d, 1.0E8d, 1.0d));
+        costo.setModel(new javax.swing.SpinnerNumberModel(0.0d, 0.0d, 10000.0d, 1.0d));
+
+        fecha.setToolTipText("");
+        fecha.setDateFormatString("dd/mm/aaaa");
+        fecha.setMinSelectableDate(new java.util.Date(1735714904000L));
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -109,10 +120,10 @@ public class EventoPanel extends javax.swing.JInternalFrame {
                             .addComponent(cupoMaximo)
                             .addComponent(ubicacion)
                             .addComponent(titulo)
-                            .addComponent(fecha)
                             .addComponent(codigo)
                             .addComponent(tipo, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(costo, javax.swing.GroupLayout.DEFAULT_SIZE, 254, Short.MAX_VALUE)))
+                            .addComponent(costo, javax.swing.GroupLayout.DEFAULT_SIZE, 254, Short.MAX_VALUE)
+                            .addComponent(fecha, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(160, 160, 160)
                         .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -126,10 +137,10 @@ public class EventoPanel extends javax.swing.JInternalFrame {
                     .addComponent(jLabel1)
                     .addComponent(codigo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel2))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(fecha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel3))
+                .addGap(12, 12, 12)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel3)
+                    .addComponent(fecha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
@@ -198,12 +209,20 @@ public class EventoPanel extends javax.swing.JInternalFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        try {
+            BACKEND.comprobarDatos();//Guardar evento
+        } catch (SQLException ex) {
+            System.getLogger(EventoPanel.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
+        }
+    }//GEN-LAST:event_jButton1ActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JSpinner codigo;
     private javax.swing.JSpinner costo;
     private javax.swing.JSpinner cupoMaximo;
-    private javax.swing.JFormattedTextField fecha;
+    private com.toedter.calendar.JDateChooser fecha;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
@@ -233,7 +252,7 @@ public class EventoPanel extends javax.swing.JInternalFrame {
         return cupoMaximo;
     }
 
-    public JFormattedTextField getFecha() {
+    public JDateChooser getFecha() {
         return fecha;
     }
 
