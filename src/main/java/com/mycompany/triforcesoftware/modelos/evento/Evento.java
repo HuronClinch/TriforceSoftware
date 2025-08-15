@@ -13,19 +13,21 @@ import java.sql.Date;
 public class Evento {
 
     private String codigoEvento;
-    private Date fechaEvento;//formato YYYY-MM-DD
-    private String tipoInscripcion;
+    private String fechaEvento; // Formato dd/MM/yyyy
+    private String tipoEvento;
     private String tituloEvento;
     private String ubicacion;
     private int cupoMaximo;
+    private double costoInscripcion;
 
-    public Evento(String codigoEvento, Date fechaEvento, String tipoInscripcion, String tituloEvento, String ubicacion, int cupoMaximo) {
+    public Evento(String codigoEvento, String fechaEvento, String tipoEvento, String tituloEvento, String ubicacion, int cupoMaximo, double costoInscripcion) {
         this.codigoEvento = codigoEvento;
         this.fechaEvento = fechaEvento;
-        this.tipoInscripcion = tipoInscripcion;
+        this.tipoEvento = tipoEvento;
         this.tituloEvento = tituloEvento;
         this.ubicacion = ubicacion;
         this.cupoMaximo = cupoMaximo;
+        this.costoInscripcion = costoInscripcion;
     }
 
     public String getCodigoEvento() {
@@ -36,20 +38,20 @@ public class Evento {
         this.codigoEvento = codigoEvento;
     }
 
-    public Date getFechaEvento() {
+    public String getFechaEvento() {
         return fechaEvento;
     }
 
-    public void setFechaEvento(Date fechaEvento) {
+    public void setFechaEvento(String fechaEvento) {
         this.fechaEvento = fechaEvento;
     }
 
-    public String getTipoInscripcion() {
-        return tipoInscripcion;
+    public String getTipoEvento() {
+        return tipoEvento;
     }
 
-    public void setTipoInscripcion(String tipoInscripcion) {
-        this.tipoInscripcion = tipoInscripcion;
+    public void setTipoEvento(String tipoEvento) {
+        this.tipoEvento = tipoEvento;
     }
 
     public String getTituloEvento() {
@@ -74,6 +76,14 @@ public class Evento {
 
     public void setCupoMaximo(int cupoMaximo) {
         this.cupoMaximo = cupoMaximo;
+    }
+
+    public double getCostoInscripcion() {
+        return costoInscripcion;
+    }
+
+    public void setCostoInscripcion(double costoInscripcion) {
+        this.costoInscripcion = costoInscripcion;
     }
 
 }

@@ -4,11 +4,14 @@
  */
 package com.mycompany.triforcesoftware.modelos.evento;
 
-import com.mycompany.triforcesoftware.modelos.asistencia.Asistencia;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.LinkedList;
 
 /**
@@ -18,113 +21,117 @@ import java.util.LinkedList;
 public class EventoCRUD {
 
     private static final String CREAR = "INSERT INTO evento "
-            + "(codigo_evento, fecha_evento, tipo_inscripcion, titulo_evento, ubicacion, cupo_maximo) "
-            + "values ('%s', '%s', '%s', '%s', '%s', %d)";
-    private static final String LEER_TABLA = "SELECT * FROM evento";
-    private static final String LEER = "SELECT * FROM evento WHERE codigo_evento = %s";
+            + "(codigo_evento, fecha_evento, tipo_evento, titulo_evento, ubicacion, cupo_maximo, costo_inscripcion) "
+            + "VALUES (?, STR_TO_DATE(?, '%d/%m/%Y'), ?, ?, ?, ?, ?)";
+    private static final String LEER_TABLA = "UPDATE evento SET "
+            + "fecha_evento=STR_TO_DATE(?, '%d/%m/%Y'), tipo_evento=?, titulo_evento=?, ubicacion=?, cupo_maximo=?, costo_inscripcion=? "
+            + "WHERE codigo_evento=?";
     private static final String ACTUALIZAR = "UPDATE evento SET "
-            + "fecha_evento='%s', tipo_inscripcion='%s', titulo_evento='%s', ubicacion='%s', cupo_maximo=%d"
-            + "WHERE codigo_evento='%s'";
-    private static final String ELIMINAR = "DELETE FROM evento WHERE codigo_evento = '%s'";
+            + "fecha_evento=STR_TO_DATE(?, '%d/%m/%Y'), tipo_evento=?, titulo_evento=?, ubicacion=?, cupo_maximo=?, costo_inscripcion=? "
+            + "WHERE codigo_evento=?";
+    private static final String ELIMINAR = "DELETE FROM evento WHERE codigo_evento=?";
 
-    public void crear(Connection connection, Evento evento) {//Crear un nuevo evento
+    private final SimpleDateFormat FORMATO_ENTRADA = new SimpleDateFormat("dd/MM/yyyy");
+    private final SimpleDateFormat FORMATO_SQL = new SimpleDateFormat("yyyy-MM-dd");
+
+    public int crear(Connection connection, Evento evento) throws SQLException {//crear nuevo evento
+        PreparedStatement preparedStatement = null;
+        int rowsAfected = 0;
         try {
-            Statement insertStatement = connection.createStatement();
+            preparedStatement = connection.prepareStatement(CREAR);//Agrecar datos de los campos
+            preparedStatement.setString(1, evento.getCodigoEvento());
+            preparedStatement.setString(2, evento.getFechaEvento());
+            preparedStatement.setString(3, evento.getTipoEvento());
+            preparedStatement.setString(4, evento.getTituloEvento());
+            preparedStatement.setString(5, evento.getUbicacion());
+            preparedStatement.setInt(6, evento.getCupoMaximo());
+            preparedStatement.setDouble(7, evento.getCostoInscripcion());
 
-            String sql = String.format(CREAR,
-                    evento.getCodigoEvento(),
-                    evento.getFechaEvento(),
-                    evento.getTipoInscripcion(),
-                    evento.getTituloEvento(),
-                    evento.getUbicacion(),
-                    evento.getCupoMaximo());//Formato para ingresar evento
-
-            insertStatement.executeUpdate(sql);//Ingresar comando SQL
-            System.out.println("sql ejecutado (Registro evento creado): " + sql);
+            rowsAfected = preparedStatement.executeUpdate();
         } catch (SQLException e) {
-            System.out.println("Hubo un error al guardar participante");
-            e.printStackTrace();
+            System.out.println("Error al crear evento");
+            e.printStackTrace(System.out);
+        } finally {
+            preparedStatement.close();
         }
+        return rowsAfected;
     }
 
-    public Evento leer(Connection connection, String codigoEvento) {//Leer un evento
-        Evento evento = null;//Crear un evento vacio
-        try {
-            Statement insertStatement = connection.createStatement();
-            String sql = String.format(LEER, codigoEvento);//Formato para buscar un evento
-            ResultSet datos = insertStatement.executeQuery(sql);//Ingresar comando SQL
-
-            if (datos.next()) {//Obtener datos del evento
-                evento = new Evento(
-                        datos.getString("codigo_evento"),
-                        datos.getDate("fecha_evento"),
-                        datos.getString("tipo_inscripcion"),
-                        datos.getString("titulo_evento"),
-                        datos.getString("ubicacion"),
-                        datos.getInt("cupo_maximo"));
-            }
-        } catch (SQLException e) {
-            System.out.println("Error al el evento");
-            e.printStackTrace();
-        }
-        return evento;
-    }
-
-    public LinkedList<Evento> leerTodos(Connection connection) {//Obtener todos los eventos
+    public LinkedList<Evento> leerTodos(Connection connection) throws SQLException {//Obtener todos los eventos
         LinkedList<Evento> lista = new LinkedList<>();
+        Statement statement = null;
+        ResultSet resultSet = null;
+
         try {
-            Statement insertStatement = connection.createStatement();
-            ResultSet datos = insertStatement.executeQuery(LEER_TABLA);//Ingresar comando SQL
+            statement = connection.createStatement();
+            resultSet = statement.executeQuery(LEER_TABLA);//Ingresar comando SQL
 
-            while (datos.next()) {//Obtener datos de los eventos y guardalos en LinkedList
-                Evento datosEvento = new Evento(
-                        datos.getString("codigo_evento"),
-                        datos.getDate("fecha_evento"),
-                        datos.getString("tipo_inscripcion"),
-                        datos.getString("titulo_evento"),
-                        datos.getString("ubicacion"),
-                        datos.getInt("cupo_maximo"));
-
-                lista.add(datosEvento);
+            while (resultSet.next()) {//Obtener datos de los eventos y guardalos en LinkedList
+                lista.add(new Evento(
+                        resultSet.getString("codigo_evento"),
+                        resultSet.getString("fecha_evento"),
+                        resultSet.getString("tipo_evento"),
+                        resultSet.getString("titulo_evento"),
+                        resultSet.getString("ubicacion"),
+                        resultSet.getInt("cupo_maximo"),
+                        resultSet.getDouble("costo_inscripcion")
+                ));
             }
         } catch (SQLException e) {
-            System.out.println("Error al listar Evento nuevo");
-            e.printStackTrace();
+            System.out.println("Error al listar eventos");
+            e.printStackTrace(System.out);
+        } finally {
+            if (resultSet != null) {
+                resultSet.close();
+            }
+            if (statement != null) {
+                statement.close();
+            }
         }
         return lista;
     }
 
-    public void actualizar(Connection connection, Evento evento) {//Actualizar a un participante
+    public int actualizar(Connection connection, Evento evento) throws SQLException {//Actualizar a un participante
+        PreparedStatement preparedStatement = null;
+        int rowsAfected = 0;
         try {
-            Statement insertStatement = connection.createStatement();
+            preparedStatement = connection.prepareStatement(ACTUALIZAR);
+            preparedStatement.setString(1, evento.getFechaEvento());
+            preparedStatement.setString(2, evento.getTipoEvento());
+            preparedStatement.setString(3, evento.getTituloEvento());
+            preparedStatement.setString(4, evento.getUbicacion());
+            preparedStatement.setInt(5, evento.getCupoMaximo());
+            preparedStatement.setDouble(6, evento.getCostoInscripcion());
+            preparedStatement.setString(7, evento.getCodigoEvento());
 
-            String sql = String.format(ACTUALIZAR,
-                    evento.getCodigoEvento(),
-                    evento.getFechaEvento(),
-                    evento.getTipoInscripcion(),
-                    evento.getTituloEvento(),
-                    evento.getUbicacion(),
-                    evento.getCupoMaximo());//Formato para ingresar evento 
-
-            insertStatement.executeUpdate(sql);//Ingresar comando SQL
-            System.out.println("sql ejecutado (Evento actualizado):" + sql);
+            rowsAfected = preparedStatement.executeUpdate();
         } catch (SQLException e) {
-            System.out.println("Hubo un error al guardar Evento");
-            e.printStackTrace();
+            System.out.println("Error al actualizar evento");
+            e.printStackTrace(System.out);
+        } finally {
+            if (preparedStatement != null) {
+                preparedStatement.close();
+            }
         }
+        return rowsAfected;
     }
 
-    public void eliminar(Connection connection, String codigoEvento) {//Eliminar Registro asistencia
+    public int eliminar(Connection connection, String codigoEvento) throws SQLException {//Eliminar Registro asistencia
+        PreparedStatement preparedStatement = null;
+        int rowsAfected = 0;
         try {
-            Statement insertStatement = connection.createStatement();
+            preparedStatement = connection.prepareStatement(ELIMINAR);
+            preparedStatement.setString(1, codigoEvento);
 
-            String sql = String.format(ELIMINAR, codigoEvento);//Formato para eliminar participante
-
-            insertStatement.executeUpdate(sql);//Ingresar comando SQL
-            System.out.println("sql ejecutado (Evento eliminado):" + sql);
+            rowsAfected = preparedStatement.executeUpdate();
         } catch (SQLException e) {
-            System.out.println("Hubo un error al Elimiar un evento");
-            e.printStackTrace();
+            System.out.println("Error al eliminar evento");
+            e.printStackTrace(System.out);
+        } finally {
+            if (preparedStatement != null) {
+                preparedStatement.close();
+            }
         }
+        return rowsAfected;
     }
 }
