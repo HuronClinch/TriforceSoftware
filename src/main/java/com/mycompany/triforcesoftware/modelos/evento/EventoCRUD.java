@@ -9,9 +9,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.LinkedList;
 
 /**
@@ -38,7 +36,7 @@ public class EventoCRUD {
         PreparedStatement preparedStatement = null;
         int rowsAfected = 0;
         try {
-            preparedStatement = connection.prepareStatement(CREAR);//Agrecar datos de los campos
+            preparedStatement = connection.prepareStatement(CREAR);//Formato para los campos
             preparedStatement.setString(1, evento.getCodigoEvento());
             preparedStatement.setString(2, evento.getFechaEvento());
             preparedStatement.setString(3, evento.getTipoEvento());
@@ -58,13 +56,13 @@ public class EventoCRUD {
     }
 
     public LinkedList<Evento> leerTodos(Connection connection) throws SQLException {//Obtener todos los eventos
-        LinkedList<Evento> lista = new LinkedList<>();
+        LinkedList<Evento> lista = new LinkedList<>();//Crear una lista nula
         Statement statement = null;
         ResultSet resultSet = null;
 
         try {
             statement = connection.createStatement();
-            resultSet = statement.executeQuery(LEER_TABLA);//Ingresar comando SQL
+            resultSet = statement.executeQuery(LEER_TABLA);//Ingresar formato
 
             while (resultSet.next()) {//Obtener datos de los eventos y guardalos en LinkedList
                 lista.add(new Evento(
@@ -95,7 +93,7 @@ public class EventoCRUD {
         PreparedStatement preparedStatement = null;
         int rowsAfected = 0;
         try {
-            preparedStatement = connection.prepareStatement(ACTUALIZAR);
+            preparedStatement = connection.prepareStatement(ACTUALIZAR);//Ingresar formato
             preparedStatement.setString(1, evento.getFechaEvento());
             preparedStatement.setString(2, evento.getTipoEvento());
             preparedStatement.setString(3, evento.getTituloEvento());
@@ -120,7 +118,7 @@ public class EventoCRUD {
         PreparedStatement preparedStatement = null;
         int rowsAfected = 0;
         try {
-            preparedStatement = connection.prepareStatement(ELIMINAR);
+            preparedStatement = connection.prepareStatement(ELIMINAR);//Ingresar formato
             preparedStatement.setString(1, codigoEvento);
 
             rowsAfected = preparedStatement.executeUpdate();
