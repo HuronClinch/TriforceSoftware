@@ -16,7 +16,7 @@ public class Connect {
 
     private static final String IP = "localhost";
     private static final int PUERTO = 3306;
-    private static final String SCHEMA = "triforce";
+    private static final String SCHEMA = "practicaone";
     public static final String URL = "jdbc:mysql://" + IP + ":" + PUERTO + "/" + SCHEMA;
 
     public static final String USER_NAME = "admindba";
