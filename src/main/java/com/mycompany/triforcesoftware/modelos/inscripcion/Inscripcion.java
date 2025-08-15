@@ -11,16 +11,19 @@ package com.mycompany.triforcesoftware.modelos.inscripcion;
 public class Inscripcion {
 
     private int noInscripcion;
-    private String correoElectronico;
+    private int noParticipante;
     private String codigoEvento;
     private String tipoInscripcion;
 
-    public Inscripcion() {
+    public Inscripcion(int noInscripcion, int noParticipante, String codigoEvento, String tipoInscripcion) {
+        this.noInscripcion = noInscripcion;
+        this.noParticipante = noParticipante;
+        this.codigoEvento = codigoEvento;
+        this.tipoInscripcion = tipoInscripcion;
     }
 
-    public Inscripcion(int noInscripcion, String correoElectronico, String codigoEvento, String tipoInscripcion) {
-        this.noInscripcion = noInscripcion;
-        this.correoElectronico = correoElectronico;
+    public Inscripcion(int noParticipante, String codigoEvento, String tipoInscripcion) {
+        this.noParticipante = noParticipante;
         this.codigoEvento = codigoEvento;
         this.tipoInscripcion = tipoInscripcion;
     }
@@ -29,12 +32,12 @@ public class Inscripcion {
         return noInscripcion;
     }
 
-    public String getCorreoElectronico() {
-        return correoElectronico;
+    public int getNoParticipante() {
+        return noParticipante;
     }
 
-    public void setCorreoElectronico(String correoElectronico) {
-        this.correoElectronico = correoElectronico;
+    public void setNoParticipante(int noParticipante) {
+        this.noParticipante = noParticipante;
     }
 
     public String getCodigoEvento() {
