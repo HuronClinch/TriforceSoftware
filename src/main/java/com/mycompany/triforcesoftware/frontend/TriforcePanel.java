@@ -4,6 +4,7 @@
  */
 package com.mycompany.triforcesoftware.frontend;
 
+import com.mycompany.triforcesoftware.frontend.evento.EventoPanel;
 import com.mycompany.triforcesoftware.frontend.participante.ParticipantePanel;
 
 /**
@@ -136,7 +137,8 @@ public class TriforcePanel extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
-        // TODO add your handling code here:
+        EventoPanel panel = new EventoPanel();
+        jDesktopPane1.add(panel).setVisible(true);
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
     private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
