@@ -18,23 +18,21 @@ import java.util.LinkedList;
 public class InscripcionCRUD {
 
     private static final String CREAR = "INSERT INTO inscripcion "
-            + "(no_participante, codigo_evento, tipo_inscripcion) "
+            + "(correo_electronico, codigo_evento, tipo_inscripcion) "
             + "VALUES (?, ?, ?)";
-    private static final String LEER_TABLA = "SELECT "
-            + "no_inscripcion, no_participante, codigo_evento, tipo_inscripcion "
-            + "FROM inscripcion";
-    private static final String LEER = "SELECT * FROM inscripcion WHERE no_inscripcion = %d";
+    private static final String LEER_TABLA = "SELECT * FROM inscripcion";
+    private static final String LEER = "SELECT * FROM inscripcion "
+            + "WHERE correo_electronico = ? AND codigo_evento = ?";
     private static final String ACTUALIZAR = "UPDATE inscripcion SET "
-            + "no_participante=?, codigo_evento=?, tipo_inscripcion=? "
-            + "WHERE no_inscripcion=?";
-    private static final String ELIMINAR = "DELETE FROM inscripcion WHERE no_inscripcion=?";
+            + "tipo_inscripcion = ? WHERE correo_electronico = ? AND codigo_evento = ?";
+    private static final String ELIMINAR = "DELETE FROM inscripcion WHERE correo_electronico = ? AND codigo_evento = ?";
 
     public int crear(Connection connection, Inscripcion inscripcion) throws SQLException {//Crear un nuevo registro de inscripcion
         PreparedStatement preparedStatement = null;
         int rowsAfected = 0;
         try {
             preparedStatement = connection.prepareStatement(CREAR);
-            preparedStatement.setInt(1, inscripcion.getNoParticipante());
+            preparedStatement.setString(1, inscripcion.getCorreoElectronico());
             preparedStatement.setString(2, inscripcion.getCodigoEvento());
             preparedStatement.setString(3, inscripcion.getTipoInscripcion());
 
@@ -79,8 +77,7 @@ public class InscripcionCRUD {
             resultSet = statement.executeQuery(LEER_TABLA);
             while (resultSet.next()) {
                 lista.add(new Inscripcion(
-                        resultSet.getInt("no_inscripcion"),
-                        resultSet.getInt("no_participante"),
+                        resultSet.getString("correo_electronico"),
                         resultSet.getString("codigo_evento"),
                         resultSet.getString("tipo_inscripcion")
                 ));
@@ -104,10 +101,9 @@ public class InscripcionCRUD {
         int rowsAfected = 0;
         try {
             preparedStatement = connection.prepareStatement(ACTUALIZAR);
-            preparedStatement.setInt(1, inscripcion.getNoParticipante());
-            preparedStatement.setString(2, inscripcion.getCodigoEvento());
-            preparedStatement.setString(3, inscripcion.getTipoInscripcion());
-            preparedStatement.setInt(4, inscripcion.getNoInscripcion());
+            preparedStatement.setString(1, inscripcion.getTipoInscripcion());
+            preparedStatement.setString(2, inscripcion.getCorreoElectronico());
+            preparedStatement.setString(3, inscripcion.getCodigoEvento());
 
             rowsAfected = preparedStatement.executeUpdate();
         } catch (SQLException e) {
@@ -121,12 +117,13 @@ public class InscripcionCRUD {
         return rowsAfected;
     }
 
-    public int eliminar(Connection connection, int noInscripcion) throws SQLException {//Eliminar registro de inscripcion
+    public int eliminar(Connection connection, String correoElectronico, String codigoEvento) throws SQLException {//Eliminar registro de inscripcion
         PreparedStatement preparedStatement = null;
         int rowsAfected = 0;
         try {
             preparedStatement = connection.prepareStatement(ELIMINAR);
-            preparedStatement.setInt(1, noInscripcion);
+            preparedStatement.setString(1, correoElectronico);
+            preparedStatement.setString(2, codigoEvento);
 
             rowsAfected = preparedStatement.executeUpdate();
         } catch (SQLException e) {
