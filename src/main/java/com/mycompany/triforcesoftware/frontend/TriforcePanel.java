@@ -5,7 +5,9 @@
 package com.mycompany.triforcesoftware.frontend;
 
 import com.mycompany.triforcesoftware.frontend.evento.EventoPanel;
+import com.mycompany.triforcesoftware.frontend.inscripcion.ParticipanteInscripcion;
 import com.mycompany.triforcesoftware.frontend.participante.ParticipantePanel;
+import java.sql.SQLException;
 
 /**
  *
@@ -39,14 +41,14 @@ public class TriforcePanel extends javax.swing.JFrame {
         jMenu6 = new javax.swing.JMenu();
         jDesktopPane1 = new javax.swing.JDesktopPane();
         jMenuBar1 = new javax.swing.JMenuBar();
-        jMenu1 = new javax.swing.JMenu();
+        menuResgistroParticipante = new javax.swing.JMenu();
         jMenuItem2 = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
-        jMenuItem1 = new javax.swing.JMenuItem();
+        MenuRegistroEvento = new javax.swing.JMenuItem();
         jMenuItem5 = new javax.swing.JMenuItem();
         jMenuItem6 = new javax.swing.JMenuItem();
         jMenuItem7 = new javax.swing.JMenuItem();
-        jMenu5 = new javax.swing.JMenu();
+        MenuRegistroIncripcionEvento = new javax.swing.JMenu();
         jMenuItem3 = new javax.swing.JMenuItem();
         jMenuItem4 = new javax.swing.JMenuItem();
         jMenu7 = new javax.swing.JMenu();
@@ -72,7 +74,7 @@ public class TriforcePanel extends javax.swing.JFrame {
             .addGap(0, 658, Short.MAX_VALUE)
         );
 
-        jMenu1.setText("Participamnte");
+        menuResgistroParticipante.setText("Participamnte");
 
         jMenuItem2.setText("Registrar Participante");
         jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
@@ -80,19 +82,19 @@ public class TriforcePanel extends javax.swing.JFrame {
                 jMenuItem2ActionPerformed(evt);
             }
         });
-        jMenu1.add(jMenuItem2);
+        menuResgistroParticipante.add(jMenuItem2);
 
-        jMenuBar1.add(jMenu1);
+        jMenuBar1.add(menuResgistroParticipante);
 
         jMenu2.setText("Evento");
 
-        jMenuItem1.setText("Registro evento");
-        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+        MenuRegistroEvento.setText("Registro evento");
+        MenuRegistroEvento.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem1ActionPerformed(evt);
+                MenuRegistroEventoActionPerformed(evt);
             }
         });
-        jMenu2.add(jMenuItem1);
+        jMenu2.add(MenuRegistroEvento);
 
         jMenuItem5.setText("Registrar Actividad");
         jMenu2.add(jMenuItem5);
@@ -105,15 +107,20 @@ public class TriforcePanel extends javax.swing.JFrame {
 
         jMenuBar1.add(jMenu2);
 
-        jMenu5.setText("Inscripcion");
+        MenuRegistroIncripcionEvento.setText("Inscripcion");
 
         jMenuItem3.setText("Inscripcion a evento");
-        jMenu5.add(jMenuItem3);
+        jMenuItem3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem3ActionPerformed(evt);
+            }
+        });
+        MenuRegistroIncripcionEvento.add(jMenuItem3);
 
         jMenuItem4.setText("Pago");
-        jMenu5.add(jMenuItem4);
+        MenuRegistroIncripcionEvento.add(jMenuItem4);
 
-        jMenuBar1.add(jMenu5);
+        jMenuBar1.add(MenuRegistroIncripcionEvento);
 
         jMenu7.setText("Reportes");
         jMenuBar1.add(jMenu7);
@@ -136,10 +143,10 @@ public class TriforcePanel extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+    private void MenuRegistroEventoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MenuRegistroEventoActionPerformed
         EventoPanel panel = new EventoPanel();
         jDesktopPane1.add(panel).setVisible(true);
-    }//GEN-LAST:event_jMenuItem1ActionPerformed
+    }//GEN-LAST:event_MenuRegistroEventoActionPerformed
 
     private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
         ParticipantePanel panel = new ParticipantePanel();
@@ -147,24 +154,34 @@ public class TriforcePanel extends javax.swing.JFrame {
 
     }//GEN-LAST:event_jMenuItem2ActionPerformed
 
+    private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
+        try {
+            ParticipanteInscripcion panel = new ParticipanteInscripcion();
+            jDesktopPane1.add(panel).setVisible(true);
+        } catch (SQLException e) {
+            System.out.println("Error al ingresar a menu inscripcion");
+            e.printStackTrace(System.out);
+        }
+    }//GEN-LAST:event_jMenuItem3ActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JMenuItem MenuRegistroEvento;
+    private javax.swing.JMenu MenuRegistroIncripcionEvento;
     private javax.swing.JDesktopPane jDesktopPane1;
-    private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu3;
     private javax.swing.JMenu jMenu4;
-    private javax.swing.JMenu jMenu5;
     private javax.swing.JMenu jMenu6;
     private javax.swing.JMenu jMenu7;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuBar jMenuBar2;
-    private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem4;
     private javax.swing.JMenuItem jMenuItem5;
     private javax.swing.JMenuItem jMenuItem6;
     private javax.swing.JMenuItem jMenuItem7;
+    private javax.swing.JMenu menuResgistroParticipante;
     // End of variables declaration//GEN-END:variables
 }
