@@ -5,6 +5,7 @@
 package com.mycompany.triforcesoftware.modelos.participante;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -17,104 +18,63 @@ import java.util.LinkedList;
 public class ParticipanteCRUD {
 
     private static final String CREAR = "INSERT INTO participante "
-            + "(nombre_completo, tipo_participante, institucion_procedencia, correo_electronico) "
-            + "values ('%s', '%s', '%s', '%s')";
-    private static final String LEER_TABLA = "SELECT * FROM participante";
-    private static final String LEER = "SELECT * FROM participante WHERE correo_electronico = '%s'";
-    private static final String ACTUALIZAR = "UPDATE participante SET "
-            + "nombre_completo = '%s', tipo_participante = '%s', institucion_procedencia = '%s' "
-            + "WHERE correo_electronico = '%s'";
-    private static final String ELIMINAR = "DELETE FROM participante WHERE correo_electronico = '%s'";
+            + "(correo_electronico, nombre_completo, tipo_participante, institucion_procedencia) "
+            + "VALUES (?, ?, ?, ?)";
+    private static final String LEER_TABLA = "SELECT "
+            + "correo_electronico, nombre_completo, tipo_participante, institucion_procedencia "
+            + "FROM participante";
 
-    public void crear(Connection connection, Participante participante) {//Crear un nuevo participante
+    public int crear(Connection connection, Participante participante) throws SQLException {//Crear un nuevo participante
+        PreparedStatement preparedStatement = null;
+        int rowsAfected = 0;
+
         try {
-            Statement insertStatement = connection.createStatement();
+            preparedStatement = connection.prepareStatement(CREAR);//Ingresar comando SQL
+            preparedStatement.setString(1, participante.getCorreoElectronico());
+            preparedStatement.setString(2, participante.getNombreCompleto());
+            preparedStatement.setString(3, participante.getTipoParticipante());
+            preparedStatement.setString(4, participante.getInstitucionProcedencia());//Formato para ingresar participante
 
-            String sql = String.format(CREAR,
-                    participante.getNombreCompleto(),
-                    participante.getTipoParticipante(),
-                    participante.getInstitucionProcedencia(),
-                    participante.getCorreoElectronico());//Formato para ingresar participante
-
-            insertStatement.executeUpdate(sql);//Ingresar comando SQL
-            System.out.println("sql ejecutado (Participante creado): " + sql);
+            rowsAfected = preparedStatement.executeUpdate();
         } catch (SQLException e) {
-            System.out.println("Hubo un error al guardar participante");
-            e.printStackTrace();
-        }
-    }
-
-    public Participante leer(Connection connection, String correo) {//Leer un participante
-        Participante participante = null;//Crear participante vacio
-        try {
-            Statement insertStatement = connection.createStatement();
-            String sql = String.format(LEER, correo);//Formato para buscar participante 
-            ResultSet datos = insertStatement.executeQuery(sql);//Ingresar comando SQL
-
-            if (datos.next()) {
-                participante = new Participante(
-                        datos.getString("correo_electronico"),
-                        datos.getString("nombre_completo"),
-                        datos.getString("tipo_participante"),
-                        datos.getString("institucion_procedencia"));
+            System.out.println("Error al crear participante");
+            e.printStackTrace(System.out);
+        } finally {
+            if (preparedStatement != null) {
+                preparedStatement.close();
             }
-        } catch (SQLException e) {
-            System.out.println("Error al leer participante");
-            e.printStackTrace();
         }
-        return participante;
+        return rowsAfected;
     }
 
-    public LinkedList<Participante> leerTodos(Connection connection) {//Obtener todos los participantes
+    public LinkedList<Participante> leerTodos(Connection connection) throws SQLException {//Obtener todos los participantes
         LinkedList<Participante> lista = new LinkedList<>();
+        Statement statement = null;
+        ResultSet resultSet = null;
+
         try {
-            Statement insertStatement = connection.createStatement();
-            ResultSet datos = insertStatement.executeQuery(LEER_TABLA);//Ingresar comando SQL
+            statement = connection.createStatement();
+            resultSet = statement.executeQuery(LEER_TABLA);//Ingresar comando SQL
 
-            while (datos.next()) {
-                Participante datosParticipante = new Participante(
-                        datos.getString("correo_electronico"),
-                        datos.getString("nombre_completo"),
-                        datos.getString("tipo_participante"),
-                        datos.getString("institucion_procedencia"));
-
-                lista.add(datosParticipante);
+            while (resultSet.next()) {
+                lista.add(new Participante(
+                        resultSet.getString("nombre_completo"),
+                        resultSet.getString("tipo_participante"),
+                        resultSet.getString("institucion_procedencia"),
+                        resultSet.getString("correo_electronico")
+                ));
             }
         } catch (SQLException e) {
             System.out.println("Error al listar participantes");
-            e.printStackTrace();
+            e.printStackTrace(System.out);
+        } finally {
+            if (resultSet != null) {
+                resultSet.close();
+            }
+            if (statement != null) {
+                statement.close();
+            }
         }
         return lista;
-    }
-
-    public void actualizar(Connection connection, Participante participante) {//Actualizar a un participante
-        try {
-            Statement insertStatement = connection.createStatement();
-
-            String sql = String.format(ACTUALIZAR,
-                    participante.getNombreCompleto(),
-                    participante.getTipoParticipante(),
-                    participante.getInstitucionProcedencia(),
-                    participante.getCorreoElectronico());//Formato para ingresar participante
-
-            insertStatement.executeUpdate(sql);//Ingresar comando SQL
-            System.out.println("sql ejecutado (Participante actualizado):" + sql);
-        } catch (SQLException e) {
-            System.out.println("Hubo un error al guardar participante");
-            e.printStackTrace();
-        }
-    }
-
-    public void eliminar(Connection connection, String correo) {//Eliminar participante
-        try {
-            Statement insertStatement = connection.createStatement();
-            String sql = String.format(ELIMINAR, correo);//Formato para eliminar participante
-
-            insertStatement.executeUpdate(sql);//Ingresar comando SQL
-            System.out.println("sql ejecutado (Participante eliminado):" + sql);
-        } catch (SQLException e) {
-            System.out.println("Hubo un error al guardar participante");
-            e.printStackTrace();
-        }
     }
 }
