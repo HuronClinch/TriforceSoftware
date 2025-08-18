@@ -4,6 +4,7 @@
  */
 package com.mycompany.triforcesoftware.frontend;
 
+import com.mycompany.triforcesoftware.frontend.cargarArchivo.CargarArchivo;
 import com.mycompany.triforcesoftware.frontend.evento.EventoPanel;
 import com.mycompany.triforcesoftware.frontend.inscripcion.ParticipanteInscripcion;
 import com.mycompany.triforcesoftware.frontend.pago.PagoPanel;
@@ -53,6 +54,8 @@ public class TriforcePanel extends javax.swing.JFrame {
         jMenuItem3 = new javax.swing.JMenuItem();
         jMenuItem4 = new javax.swing.JMenuItem();
         jMenu7 = new javax.swing.JMenu();
+        jMenu1 = new javax.swing.JMenu();
+        jMenuItem1 = new javax.swing.JMenuItem();
 
         jMenu3.setText("File");
         jMenuBar2.add(jMenu3);
@@ -131,6 +134,18 @@ public class TriforcePanel extends javax.swing.JFrame {
         jMenu7.setText("Reportes");
         jMenuBar1.add(jMenu7);
 
+        jMenu1.setText("Cargar archivo");
+
+        jMenuItem1.setText("Cargar");
+        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem1ActionPerformed(evt);
+            }
+        });
+        jMenu1.add(jMenuItem1);
+
+        jMenuBar1.add(jMenu1);
+
         setJMenuBar(jMenuBar1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -180,11 +195,17 @@ public class TriforcePanel extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jMenuItem4ActionPerformed
 
+    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+        CargarArchivo panel = new CargarArchivo();
+        jDesktopPane1.add(panel).setVisible(true);
+    }//GEN-LAST:event_jMenuItem1ActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuItem MenuRegistroEvento;
     private javax.swing.JMenu MenuRegistroIncripcionEvento;
     private javax.swing.JDesktopPane jDesktopPane1;
+    private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu3;
     private javax.swing.JMenu jMenu4;
@@ -192,6 +213,7 @@ public class TriforcePanel extends javax.swing.JFrame {
     private javax.swing.JMenu jMenu7;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuBar jMenuBar2;
+    private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem4;
