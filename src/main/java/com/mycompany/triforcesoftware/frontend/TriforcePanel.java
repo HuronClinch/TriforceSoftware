@@ -6,6 +6,7 @@ package com.mycompany.triforcesoftware.frontend;
 
 import com.mycompany.triforcesoftware.frontend.evento.EventoPanel;
 import com.mycompany.triforcesoftware.frontend.inscripcion.ParticipanteInscripcion;
+import com.mycompany.triforcesoftware.frontend.pago.PagoPanel;
 import com.mycompany.triforcesoftware.frontend.participante.ParticipantePanel;
 import java.sql.SQLException;
 
@@ -118,6 +119,11 @@ public class TriforcePanel extends javax.swing.JFrame {
         MenuRegistroIncripcionEvento.add(jMenuItem3);
 
         jMenuItem4.setText("Pago");
+        jMenuItem4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem4ActionPerformed(evt);
+            }
+        });
         MenuRegistroIncripcionEvento.add(jMenuItem4);
 
         jMenuBar1.add(MenuRegistroIncripcionEvento);
@@ -163,6 +169,16 @@ public class TriforcePanel extends javax.swing.JFrame {
             e.printStackTrace(System.out);
         }
     }//GEN-LAST:event_jMenuItem3ActionPerformed
+
+    private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
+        try {
+            PagoPanel panel = new PagoPanel();
+            jDesktopPane1.add(panel).setVisible(true);
+        } catch (SQLException e) {
+            System.out.println("Error al ingresar a menu pago");
+            e.printStackTrace(System.out);
+        }
+    }//GEN-LAST:event_jMenuItem4ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
