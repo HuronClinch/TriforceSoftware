@@ -21,16 +21,15 @@ public class ControladorParticipante {
     private ParticipanteCRUD CRUD;
     private LinkedList<Participante> lista;
 
-    public ControladorParticipante() {
+    public ControladorParticipante() throws SQLException {
         Connect conceccion = new Connect();
         CONNECTION = conceccion.connect();//Crear conceccion con base de datos 
         CRUD = new ParticipanteCRUD();//
         ListadoParticipantes();//Obtener el listado de las personas incritas
     }
 
-    public boolean nuevoParticipante(String nombre, String tipo, String institucion, String correo) {//Crear participante
+    public boolean nuevoParticipante(Participante participante) {//Crear participante
         try {
-            Participante participante = new Participante(nombre, tipo, institucion, correo);//Crear Personaje
             CRUD.crear(CONNECTION, participante);//Agregar participante
             CONNECTION.close();
 
@@ -42,7 +41,7 @@ public class ControladorParticipante {
         }
     }
 
-    private void ListadoParticipantes() {//Obtener los datos de los participantes
+    private void ListadoParticipantes() throws SQLException {//Obtener los datos de los participantes
         lista = CRUD.leerTodos(CONNECTION);
     }
 
