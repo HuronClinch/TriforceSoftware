@@ -5,9 +5,9 @@
 package com.mycompany.triforcesoftware.modelos.asistencia.pagos;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.LinkedList;
 
 /**
@@ -18,107 +18,62 @@ public class PagoCRUD {
 
     private static final String CREAR = "INSERT INTO pago "
             + "(correo_electronico, codigo_evento, metodo_pago, monto) "
-            + "VALUES ('%s', '%s', '%s', %.2f)";
+            + "VALUES (?, ?, ?, ?)";
     private static final String LEER_TABLA = "SELECT * FROM pago";
-    private static final String LEER = "SELECT * FROM pago WHERE no_pago = %d";
-    private static final String ACTUALIZAR = "UPDATE pago SET "
-            + "correo_electronico='%s', codigo_evento='%s', metodo_pago='%s', monto=%.2f "
-            + "WHERE no_pago=%d";
-    private static final String ELIMINAR = "DELETE FROM pago WHERE no_pago = %d";
 
-    public void crear(Connection connection, Pago pago) {//Crear un pago para evento
+    public int crear(Connection connection, Pago pago) throws SQLException {//Crear un pago para evento
+        PreparedStatement preparedStatement = null;
+        int rowsAffected = 0;
         try {
-            Statement insertStatement = connection.createStatement();
+            preparedStatement = connection.prepareStatement(CREAR);//Ingresar comando SQL
+            preparedStatement.setString(1, pago.getCorreoElectronico());
+            preparedStatement.setString(2, pago.getCodigoEvento());
+            preparedStatement.setString(3, pago.getMetodoPago());
+            preparedStatement.setDouble(4, pago.getMonto());//Formato para ingresar pago
 
-            String sql = String.format(CREAR,
-                    pago.getCorreoElectronico(),
-                    pago.getCodigoEvento(),
-                    pago.getMetodoPago(),
-                    pago.getMonto());//Formato para ingresar pago
-
-            insertStatement.executeUpdate(sql);//Ingresar comando SQL
-            System.out.println("SQL ejecutado (Pago creado): " + sql);
+            rowsAffected = preparedStatement.executeUpdate();
         } catch (SQLException e) {
             System.out.println("Hubo un error al guardar pago");
-            e.printStackTrace();
-        }
-    }
-
-    public Pago leer(Connection connection, int noPago) {//Leer un evento
-        Pago pago = null;//Crear evento vacio
-        try {
-            Statement stmt = connection.createStatement();
-            String sql = String.format(LEER, noPago);//Formato para buscar pago
-            ResultSet datos = stmt.executeQuery(sql);//Ingresar comado SQL
-
-            if (datos.next()) {//Obtener datos del pago
-                pago = new Pago(
-                        datos.getInt("no_pago"),
-                        datos.getString("correo_electronico"),
-                        datos.getString("codigo_evento"),
-                        datos.getString("metodo_pago"),
-                        datos.getDouble("monto"));
+            e.printStackTrace(System.out);
+        } finally {
+            if (preparedStatement != null) {
+                preparedStatement.close();
             }
-        } catch (SQLException e) {
-            System.out.println("Error al leer pago");
-            e.printStackTrace();
         }
-        return pago;
+        return rowsAffected;
     }
 
-    public LinkedList<Pago> leerTodos(Connection connection) {//Obtener todos los registros de pagos
-        LinkedList<Pago> lista = new LinkedList<>();
+    public LinkedList<Pago> leerTodos(Connection connection) throws SQLException {//Obtener todos los registros de pagos
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        LinkedList<Pago> lista = new LinkedList<>();//Crear una lista nula
+        
         try {
-            Statement insertStatement = connection.createStatement();
-            ResultSet datos = insertStatement.executeQuery(LEER_TABLA);//Ingresar comando SQL
+            preparedStatement = connection.prepareStatement(LEER_TABLA);//Ingresar comando SQL
+            resultSet = preparedStatement.executeQuery();
 
-            while (datos.next()) {//Obtener datos de los eventos y guardarlos en linkedList
+            while (resultSet.next()) {//Obtener datos de los eventos y guardalos en LinkedList
                 Pago pago = new Pago(
-                        datos.getInt("no_pago"),
-                        datos.getString("correo_electronico"),
-                        datos.getString("codigo_evento"),
-                        datos.getString("metodo_pago"),
-                        datos.getDouble("monto"));
+                        resultSet.getInt("no_pago"),
+                        resultSet.getString("correo_electronico"),
+                        resultSet.getString("codigo_evento"),
+                        resultSet.getString("metodo_pago"),
+                        resultSet.getDouble("monto")
+                );
 
                 lista.add(pago);
             }
         } catch (SQLException e) {
-            System.out.println("Error al listar pagos");
-            e.printStackTrace();
+            System.out.println("Error al leer pagos");
+            e.printStackTrace(System.out);
+        } finally {
+            if (resultSet != null) {
+                resultSet.close();
+            }
+            if (preparedStatement != null) {
+                preparedStatement.close();
+            }
         }
         return lista;
-    }
-
-    public void actualizar(Connection connection, Pago pago) {//Actualizar un pago
-        try {
-            Statement insertStatement = connection.createStatement();
-
-            String sql = String.format(ACTUALIZAR,
-                    pago.getCorreoElectronico(),
-                    pago.getCodigoEvento(),
-                    pago.getMetodoPago(),
-                    pago.getMonto(),
-                    pago.getNoPago());//Formato para actualizar pago
-
-            insertStatement.executeUpdate(sql);//Ingresar comando SQL
-            System.out.println("SQL ejecutado (Pago actualizado): " + sql);
-        } catch (SQLException e) {
-            System.out.println("Hubo un error al actualizar pago");
-            e.printStackTrace();
-        }
-    }
-
-    public void eliminar(Connection connection, int noPago) {//Eliminar registro de pago
-        try {
-            Statement insertStatement = connection.createStatement();
-
-            String sql = String.format(ELIMINAR, noPago);//Formato para elimar pago
-
-            insertStatement.executeUpdate(sql);//Ingresar comando SQL
-            System.out.println("SQL ejecutado (Pago eliminado): " + sql);
-        } catch (SQLException e) {
-            System.out.println("Hubo un error al eliminar pago");
-            e.printStackTrace();
-        }
     }
 }
