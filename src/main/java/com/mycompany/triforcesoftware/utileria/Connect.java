@@ -6,7 +6,9 @@ package com.mycompany.triforcesoftware.utileria;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 
 /**
  *
@@ -26,7 +28,11 @@ public class Connect {
     public Connection connect() {
         try {
             if (connection == null || connection.isClosed()) {//comprobar si no hay coneccion encendida
+                existeUsuario();//Comprobar si exite el usuario
+
                 connection = DriverManager.getConnection(URL, USER_NAME, PASSWORD);
+                CrearBaseDatos crearDataBase = new CrearBaseDatos();
+                crearDataBase.crearDataBase(connection);
                 System.out.println("Se creo la coneccion correctamente");
                 System.out.println("Esquema: " + connection.getSchema());
                 System.out.println("Catalogo: " + connection.getCatalog());
@@ -37,5 +43,23 @@ public class Connect {
             e.printStackTrace();
         }
         return null;
+    }
+
+    private void existeUsuario() throws SQLException {//Comprobar si exite el usuario
+        connection = DriverManager.getConnection(URL, USER_NAME, PASSWORD);
+
+        Statement preparedStatement = connection.createStatement();
+        ResultSet resultSet = preparedStatement.executeQuery(
+                "SELECT COUNT(*) FROM mysql.user WHERE user='" + USER_NAME + "' AND host='localhost'");
+
+        resultSet.next();
+        int count = resultSet.getInt(1);
+
+        if (count == 0) {//Crear usuario si no existe
+            System.out.println("El usuario no existe. Creando usuario...");
+            preparedStatement.executeUpdate("CREATE USER '" + USER_NAME + "'@'localhost' IDENTIFIED BY '" + PASSWORD + "'");
+            preparedStatement.executeUpdate("GRANT ALL PRIVILEGES ON " + SCHEMA + ".* TO '" + USER_NAME + "'@'localhost'");
+            preparedStatement.executeUpdate("FLUSH PRIVILEGES");
+        }
     }
 }
