@@ -30,29 +30,39 @@ public class InscripcionBackend {
         this.PANEL = PANEL;
     }
 
+    public InscripcionBackend() {
+        this.PANEL = null;
+    }
+
     public void comprobarDatos() throws SQLException {//Comprobar si los datos esta ingresados correctamente
         String correo = PANEL.getCorreo().getItemAt(PANEL.getCorreo().getSelectedIndex());//Obtener el correo de la persona seleccionado
         String codigoEvento = PANEL.getCodigoEvento().getItemAt(PANEL.getCodigoEvento().getSelectedIndex());//Obtener el codigo del evento seleccionado
         String tipoEvento = PANEL.getTipoEvnto().getItemAt(PANEL.getTipoEvnto().getSelectedIndex());//Obtener el tipo de evnto
-        if (correo == null) {//Comprbar si hay participantes creados
-            JOptionPane.showMessageDialog(null, "No hay participantes");
-        } else if (codigoEvento == null) {//Comprbar si hay eventos ingresados
-            JOptionPane.showMessageDialog(null, "No hay Eventos");
+
+        Inscripcion inscripcion = new Inscripcion(correo, codigoEvento, tipoEvento);//Crear evento
+        datosValidos(inscripcion);
+    }
+
+    public boolean datosValidos(Inscripcion inscripcion) throws SQLException {
+        if (inscripcion.getCorreoElectronico() == null) {//Comprbar si hay participantes creados
+            JOptionPane.showMessageDialog(null, "No hay participantes, registro evento invalido");
+        } else if (inscripcion.getCodigoEvento() == null) {//Comprbar si hay eventos ingresados
+            JOptionPane.showMessageDialog(null, "No hay Eventos, registro evento invalido");
         }
 
         ControladorInscripcion controlador = new ControladorInscripcion();
 
-        if (vericfiarInscripcion(controlador.getLista(), correo, codigoEvento)) {//Comprobar si no existe un incripcion
-            Inscripcion inscripcion = new Inscripcion(correo, codigoEvento, tipoEvento);//Crear evento
+        if (vericfiarInscripcion(controlador.getLista(), inscripcion.getCorreoElectronico(), inscripcion.getCodigoEvento())) {//Comprobar si no existe un incripcion
             controlador.nuevoEvento(inscripcion);//Ingresar inscripcion en base 
             JOptionPane.showMessageDialog(null, "Incripcion agregada exitosamente");
         }
+        return false;
     }
 
     private boolean vericfiarInscripcion(LinkedList<Inscripcion> lista, String correo, String codigoEvento) {//Comprobar si ya existe el correo ingresado 
         for (Inscripcion inscripcion : lista) {
             if (inscripcion.getCorreoElectronico().equals(correo) && inscripcion.getCodigoEvento().equals(codigoEvento)) {//Comprobar si ya esta ingresado el correo
-                JOptionPane.showMessageDialog(null, "Ya existe una incripcion con este participante");
+                JOptionPane.showMessageDialog(null, "Ya existe una incripcion con este participante,\n registro evento invalido");
                 return false;
             }
         }
@@ -70,13 +80,19 @@ public class InscripcionBackend {
     }
 
     private void agregarParticipantes() {//Comprobar si ya existe el correo ingresado 
-        ControladorParticipante controlador = new ControladorParticipante();
-        LinkedList<Participante> lista = controlador.getLista();
-        formatoComboBox(PANEL.getCorreo());
+        try {
+            ControladorParticipante controlador = new ControladorParticipante();
+            LinkedList<Participante> lista = controlador.getLista();
+            formatoComboBox(PANEL.getCorreo());
 
-        for (Participante participante : lista) {
-            PANEL.getCorreo().addItem(participante.getCorreoElectronico());
+            for (Participante participante : lista) {
+                PANEL.getCorreo().addItem(participante.getCorreoElectronico());
+            }
+        } catch (SQLException e) {
+            System.out.println("Error al leer participante");
+            e.printStackTrace(System.out);
         }
+
     }
 
     private void agregarCodigoEvento() throws SQLException {//Comprobar si ya existe el correo ingresado 
