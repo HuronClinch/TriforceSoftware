@@ -28,6 +28,10 @@ public class EventoBackend {
         this.PANEL = PANEL;
     }
 
+    public EventoBackend() {
+        this.PANEL = null;
+    }
+
     public void comprobarDatos() throws SQLException {//Comprobar si los datos esta ingresados correctamente
         String codigo = "EVT-" + (int) PANEL.getCodigo().getValue();//Codigo evento
         if (!comprobarCampofecha(PANEL.getFecha().getDate())) {//Comproabr si ingreso fecha
@@ -41,21 +45,29 @@ public class EventoBackend {
         int cupoMaximo = (int) PANEL.getCupoMaximo().getValue();//Cupo maximo evento
         double costo = (double) PANEL.getCosto().getValue();//Costo evento
 
+        Evento evento = new Evento(codigo, fechaStr, tipo, titulo, ubicacion, cupoMaximo, costo);//Crear evento
+        if (datosValidos(evento)) {
+            limpiarDatos();
+        }
+
+    }
+
+    public boolean datosValidos(Evento evento) throws SQLException {
         Atajos atajos = new Atajos();
-        if ((tipo.equals(TIPO[0]) || tipo.equals(TIPO[1]) || tipo.equals(TIPO[2]) || tipo.equals(TIPO[3]))
-                && atajos.comprobarTexto(titulo, "Titulo del evento", 45)
-                && atajos.comprobarTexto(ubicacion, "Ubicacion", 150)) {//Comprobar si los valeres cumplen con los requisitos
+        if ((evento.getTipoEvento().equals(TIPO[0]) || evento.getTipoEvento().equals(TIPO[1]) || evento.getTipoEvento().equals(TIPO[2]) || evento.getTipoEvento().equals(TIPO[3]))
+                && atajos.comprobarTexto(evento.getTituloEvento(), "Titulo del evento", 45)
+                && atajos.comprobarTexto(evento.getUbicacion(), "Ubicacion", 150)) {//Comprobar si los valeres cumplen con los requisitos
 
             ControladorEvento controlador = new ControladorEvento();
-            if (verificarCodigo(controlador.getLista(), codigo)) {//Si no existe el correo ingresado
-                Evento evento = new Evento(codigo, fechaStr, tipo, titulo, ubicacion, cupoMaximo, costo);//Crear evento
+            if (verificarCodigo(controlador.getLista(), evento.getCodigoEvento())) {//Si no existe el correo ingresado
                 controlador.nuevoEvento(evento);//Ingresar evento en base 
                 JOptionPane.showMessageDialog(null, "Participante creado exitosamente");
-                limpiarDatos();
+                return true;
             }
         } else {
             System.out.println("Tipo no encontrado");
         }
+        return false;
     }
 
     private boolean verificarCodigo(LinkedList<Evento> lista, String codigo) {//Comprobar si ya existe el correo ingresado 
@@ -81,7 +93,6 @@ public class EventoBackend {
         PANEL.getTitulo().setText("");
         PANEL.getUbicacion().setText("");
         PANEL.getCupoMaximo().setValue(10);
-        PANEL.getCosto().setValue(0);
     }
 
     public void datos() {//Llenar co comboBox con las valores definidos
