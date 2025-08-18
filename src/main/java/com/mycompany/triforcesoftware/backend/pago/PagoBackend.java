@@ -35,6 +35,11 @@ public class PagoBackend {
         CONTROLADOR = new ControladorInscripcion();
     }
 
+    public PagoBackend() throws SQLException {
+        this.PANEL = null;
+        CONTROLADOR = new ControladorInscripcion();
+    }
+
     public void comprobarDatos() throws SQLException {//Comprobar si los datos esta ingresados correctamente
         String correoElectronico = PANEL.getCorreoElectronico().getItemAt(PANEL.getCorreoElectronico().getSelectedIndex());//Correo electronico
         String codigoEvento = PANEL.getCodigoEvento().getItemAt(PANEL.getCodigoEvento().getSelectedIndex());//Codigo evento 
@@ -42,20 +47,30 @@ public class PagoBackend {
         double costo = (double) PANEL.getMonto().getValue();//Costo evento 
 
         Pago pago = new Pago(0, correoElectronico, codigoEvento, tipo, costo);//Crear pago
+        datosValidos(pago);
+    }
 
-        if (validarInscripcion(pago)
-                && (tipo.equals(TIPO[0]) || tipo.equals(TIPO[1]) || tipo.equals(TIPO[2]))) {//Comprobar que los tatos sean correctos
+    public boolean datosValidos(Pago pago) {//Ver si los campos estan llenados correctamente]
+        lista = CONTROLADOR.getLista();
+        try {
+            if (validarInscripcion(pago)
+                    && (pago.getMetodoPago().equals(TIPO[0]) || pago.getMetodoPago().equals(TIPO[1]) || pago.getMetodoPago().equals(TIPO[2]))) {//Comprobar que los tatos sean correctos
 
-            ControladorPago controlador = new ControladorPago();
+                ControladorPago controlador = new ControladorPago();
 
-            if (controlador.verificarPago(correoElectronico, codigoEvento)) {//Si no existe el correo ingresado
+                if (controlador.verificarPago(pago.getCorreoElectronico(), pago.getCodigoEvento())) {//Si no existe el correo ingresado
 
-                controlador.nuevoEvento(pago);//Ingresar evento en base 
-                JOptionPane.showMessageDialog(null, "Participante creado exitosamente");
+                    controlador.nuevoEvento(pago);//Ingresar evento en base 
+                    JOptionPane.showMessageDialog(null, "pago de inscripcion creado exitosamente");
+                }
+            } else {
+                System.out.println("Tipo no encontrado");
             }
-        } else {
-            System.out.println("Tipo no encontrado");
+        } catch (SQLException e) {
+            System.out.println("Error validar datos");
+            e.printStackTrace(System.out);
         }
+        return false;
     }
 
     public void datos() throws SQLException {//Llenar el comboBox con las valores definidos
