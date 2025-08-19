@@ -8,7 +8,6 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.LinkedList;
 
 /**
@@ -26,15 +25,6 @@ public class ActividadCRUD {
         PreparedStatement preparedStatement = null;
         int rowsAffected = 0;
         try {
-            System.out.println(actividad.getCodigoActividad());
-            System.out.println(actividad.getCodigoEvento());
-            System.out.println(actividad.getTipoActividad());
-            System.out.println(actividad.getTipoActividad());
-            System.out.println(actividad.getTituloActividad());
-            System.out.println(actividad.getCorreoElectronicoPonente());
-            System.out.println(actividad.getHoraInicio());
-            System.out.println("" + actividad.getHoraFin());
-            System.out.println("" + actividad.getCupoMaximo());
             preparedStatement = connection.prepareStatement(CREAR);
             preparedStatement.setString(1, actividad.getCodigoActividad());
             preparedStatement.setString(2, actividad.getCodigoEvento());
