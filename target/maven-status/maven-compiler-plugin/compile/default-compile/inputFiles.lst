@@ -5,6 +5,8 @@
 /home/huron_clinch/Documentos/Universidad/IPC2/TriforceSoftware/src/main/java/com/mycompany/triforcesoftware/backend/inscripcion/InscripcionBackend.java
 /home/huron_clinch/Documentos/Universidad/IPC2/TriforceSoftware/src/main/java/com/mycompany/triforcesoftware/backend/pago/PagoBackend.java
 /home/huron_clinch/Documentos/Universidad/IPC2/TriforceSoftware/src/main/java/com/mycompany/triforcesoftware/backend/participante/ParticipanteBackend.java
+/home/huron_clinch/Documentos/Universidad/IPC2/TriforceSoftware/src/main/java/com/mycompany/triforcesoftware/backend/registroactividad/RegistroActividadBackend.java
+/home/huron_clinch/Documentos/Universidad/IPC2/TriforceSoftware/src/main/java/com/mycompany/triforcesoftware/controladores/ControladorActividad.java
 /home/huron_clinch/Documentos/Universidad/IPC2/TriforceSoftware/src/main/java/com/mycompany/triforcesoftware/controladores/ControladorCargarDatos.java
 /home/huron_clinch/Documentos/Universidad/IPC2/TriforceSoftware/src/main/java/com/mycompany/triforcesoftware/controladores/ControladorEvento.java
 /home/huron_clinch/Documentos/Universidad/IPC2/TriforceSoftware/src/main/java/com/mycompany/triforcesoftware/controladores/ControladorInscripcion.java
@@ -16,6 +18,7 @@
 /home/huron_clinch/Documentos/Universidad/IPC2/TriforceSoftware/src/main/java/com/mycompany/triforcesoftware/frontend/inscripcion/ParticipanteInscripcion.java
 /home/huron_clinch/Documentos/Universidad/IPC2/TriforceSoftware/src/main/java/com/mycompany/triforcesoftware/frontend/pago/PagoPanel.java
 /home/huron_clinch/Documentos/Universidad/IPC2/TriforceSoftware/src/main/java/com/mycompany/triforcesoftware/frontend/participante/ParticipantePanel.java
+/home/huron_clinch/Documentos/Universidad/IPC2/TriforceSoftware/src/main/java/com/mycompany/triforcesoftware/frontend/registroActividad/RegistroActividadPanel.java
 /home/huron_clinch/Documentos/Universidad/IPC2/TriforceSoftware/src/main/java/com/mycompany/triforcesoftware/modelos/actividad/Actividad.java
 /home/huron_clinch/Documentos/Universidad/IPC2/TriforceSoftware/src/main/java/com/mycompany/triforcesoftware/modelos/actividad/ActividadCRUD.java
 /home/huron_clinch/Documentos/Universidad/IPC2/TriforceSoftware/src/main/java/com/mycompany/triforcesoftware/modelos/asistencia/Asistencia.java

@@ -9,6 +9,7 @@ import com.mycompany.triforcesoftware.frontend.evento.EventoPanel;
 import com.mycompany.triforcesoftware.frontend.inscripcion.ParticipanteInscripcion;
 import com.mycompany.triforcesoftware.frontend.pago.PagoPanel;
 import com.mycompany.triforcesoftware.frontend.participante.ParticipantePanel;
+import com.mycompany.triforcesoftware.frontend.registroActividad.RegistroActividadPanel;
 import java.sql.SQLException;
 
 /**
@@ -101,6 +102,11 @@ public class TriforcePanel extends javax.swing.JFrame {
         jMenu2.add(MenuRegistroEvento);
 
         jMenuItem5.setText("Registrar Actividad");
+        jMenuItem5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem5ActionPerformed(evt);
+            }
+        });
         jMenu2.add(jMenuItem5);
 
         jMenuItem6.setText("Registrar Asistencia");
@@ -199,6 +205,11 @@ public class TriforcePanel extends javax.swing.JFrame {
         CargarArchivo panel = new CargarArchivo();
         jDesktopPane1.add(panel).setVisible(true);
     }//GEN-LAST:event_jMenuItem1ActionPerformed
+
+    private void jMenuItem5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem5ActionPerformed
+        RegistroActividadPanel panel = new RegistroActividadPanel();
+        jDesktopPane1.add(panel).setVisible(true);
+    }//GEN-LAST:event_jMenuItem5ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
