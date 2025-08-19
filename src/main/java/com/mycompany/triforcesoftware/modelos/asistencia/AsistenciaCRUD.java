@@ -4,8 +4,8 @@
  */
 package com.mycompany.triforcesoftware.modelos.asistencia;
 
-import com.mycompany.triforcesoftware.modelos.participante.Participante;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -19,99 +19,58 @@ public class AsistenciaCRUD {
 
     private static final String CREAR = "INSERT INTO asistencia "
             + "(correo_electronico, codigo_actividad) "
-            + "values ('%s', '%s')";
-    private static final String LEER_TABLA = "SELECT * FROM asistencia";
-    private static final String LEER = "SELECT * FROM asistencia WHERE no_asistencia = %d";
-    private static final String ACTUALIZAR = "UPDATE asistencia SET "
-            + "correo_electronico = '%s', codigo_actividad = '%s' "
-            + "WHERE no_asistencia = %d";
-    private static final String ELIMINAR = "DELETE FROM asistencia WHERE no_asistencia = %d";
+            + "VALUES (?, ?)";
 
-    public void crear(Connection connection, Asistencia asistencia) {//Crear un nuevo registro de asistencia
+    private static final String LEER_TABLA = "SELECT "
+            + "correo_electronico, codigo_actividad FROM asistencia";
+
+    public int crear(Connection connection, Asistencia asistencia) throws SQLException {//Crear un nuevo registro de asistencia
+        PreparedStatement preparedStatement = null;
+        int rowsAffected = 0;
+
         try {
-            Statement insertStatement = connection.createStatement();
+            preparedStatement = connection.prepareStatement(CREAR);//Ingresar comando SQL
+            preparedStatement.setString(1, asistencia.getCorreoElectronico());
+            preparedStatement.setString(2, asistencia.getCodigoActividad());//Formato para ingresar asistencia
 
-            String sql = String.format(CREAR,
-                    asistencia.getCorreoElectronico(),
-                    asistencia.getCodigoActividad());//Formato para ingresar participante
-
-            insertStatement.executeUpdate(sql);//Ingresar comando SQL
-            System.out.println("sql ejecutado (Registro asistencia creado): " + sql);
+            rowsAffected = preparedStatement.executeUpdate();
         } catch (SQLException e) {
-            System.out.println("Hubo un error al guardar participante");
-            e.printStackTrace();
+            System.out.println("Error al crear asistencia");
+            e.printStackTrace(System.out);
+        } finally {
+            if (preparedStatement != null) {
+                preparedStatement.close();
+            }
         }
+        return rowsAffected;
     }
 
-    public Asistencia leer(Connection connection, int id) {//Leer un participante
-        Asistencia asistencia = null;//Crear un registro nulo de asistencia 
-        try {
-            Statement insertStatement = connection.createStatement();
-            String sql = String.format(LEER, id);//Formato para buscar una registro de asistencia
-            ResultSet datos = insertStatement.executeQuery(sql);//Ingresar comando SQL
+    public LinkedList<Asistencia> leerTodos(Connection connection) throws SQLException {//Obtener todos los participantes
+        LinkedList<Asistencia> lista = new LinkedList<>();//Crear una lista nueva
+        Statement statement = null;
+        ResultSet resultSet = null;
 
-            if (datos.next()) {//Obtener datos de asistencia
-                asistencia = new Asistencia(
-                        datos.getInt("no_asistencia"),
-                        datos.getString("correo_electronico"),
-                        datos.getString("codigo_actividad"));
+        try {
+            statement = connection.createStatement();
+            resultSet = statement.executeQuery(LEER_TABLA);//Ingresar comando SQL
+
+            while (resultSet.next()) {
+                lista.add(new Asistencia(
+                        resultSet.getString("correo_electronico"),
+                        resultSet.getString("codigo_actividad")
+                ));
             }
         } catch (SQLException e) {
-            System.out.println("Error al leer participante");
-            e.printStackTrace();
-        }
-        return asistencia;
-    }
-
-    public LinkedList<Asistencia> leerTodos(Connection connection) {//Obtener todos los participantes
-        LinkedList<Asistencia> lista = new LinkedList<>();
-        try {
-            Statement insertStatement = connection.createStatement();
-            ResultSet datos = insertStatement.executeQuery(LEER_TABLA);//Ingresar comando SQL
-
-            while (datos.next()) {//Obtener datos de asistnecia y guardalos en LinkedList
-                Asistencia datosParticipante = new Asistencia(
-                        datos.getInt("no_asistencia"),
-                        datos.getString("correo_electronico"),
-                        datos.getString("codigo_actividad"));
-
-                lista.add(datosParticipante);
+            System.out.println("Error al listar asistencias");
+            e.printStackTrace(System.out);
+        } finally {
+            if (resultSet != null) {
+                resultSet.close();
             }
-        } catch (SQLException e) {
-            System.out.println("Error al listar participantes");
-            e.printStackTrace();
+            if (statement != null) {
+                statement.close();
+            }
         }
         return lista;
-    }
-
-    public void actualizar(Connection connection, Asistencia asistencia) {//Actualizar a un participante
-        try {
-            Statement insertStatement = connection.createStatement();
-
-            String sql = String.format(ACTUALIZAR,
-                    asistencia.getCorreoElectronico(),
-                    asistencia.getCodigoActividad(),
-                    asistencia.getNoAsistencia());//Formato para ingresar participante
-
-            insertStatement.executeUpdate(sql);//Ingresar comando SQL
-            System.out.println("sql ejecutado (Registro asistencia actualizado):" + sql);
-        } catch (SQLException e) {
-            System.out.println("Hubo un error al guardar participante");
-            e.printStackTrace();
-        }
-    }
-
-    public void eliminar(Connection connection, String correo) {//Eliminar Registro asistencia
-        try {
-            Statement insertStatement = connection.createStatement();
-
-            String sql = String.format(ELIMINAR, correo);//Formato para eliminar participante
-
-            insertStatement.executeUpdate(sql);//Ingresar comando SQL
-            System.out.println("sql ejecutado (Registro asistencia eliminado):" + sql);
-        } catch (SQLException e) {
-            System.out.println("Hubo un error al eliminar evento");
-            e.printStackTrace();
-        }
     }
 }
