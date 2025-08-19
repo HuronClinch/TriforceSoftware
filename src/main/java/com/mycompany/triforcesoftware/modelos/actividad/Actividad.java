@@ -4,6 +4,8 @@
  */
 package com.mycompany.triforcesoftware.modelos.actividad;
 
+import java.sql.Time;
+
 /**
  *
  * @author huron_clinch
@@ -15,10 +17,11 @@ public class Actividad {
     private String tipoActividad;
     private String tituloActividad;
     private String correoElectronicoPonente;
-    private String horaInicio;
-    private String horaFin;
+    private Time horaInicio;
+    private Time horaFin;
+    private int cupoMaximo;
 
-    public Actividad(String codigoActividad, String codigoEvento, String tipoActividad, String tituloActividad, String correoElectronicoPonente, String horaInicio, String horaFin) {
+    public Actividad(String codigoActividad, String codigoEvento, String tipoActividad, String tituloActividad, String correoElectronicoPonente, Time horaInicio, Time horaFin, int cupoMaximo) {
         this.codigoActividad = codigoActividad;
         this.codigoEvento = codigoEvento;
         this.tipoActividad = tipoActividad;
@@ -26,6 +29,7 @@ public class Actividad {
         this.correoElectronicoPonente = correoElectronicoPonente;
         this.horaInicio = horaInicio;
         this.horaFin = horaFin;
+        this.cupoMaximo = cupoMaximo;
     }
 
     public String getCodigoActividad() {
@@ -68,21 +72,27 @@ public class Actividad {
         this.correoElectronicoPonente = correoElectronicoPonente;
     }
 
-    public String getHoraInicio() {
+    public Time getHoraInicio() {
         return horaInicio;
     }
 
-    public void setHoraInicio(String horaInicio) {
+    public void setHoraInicio(Time horaInicio) {
         this.horaInicio = horaInicio;
     }
 
-    public String getHoraFin() {
+    public Time getHoraFin() {
         return horaFin;
     }
 
-    public void setHoraFin(String horaFin) {
+    public void setHoraFin(Time horaFin) {
         this.horaFin = horaFin;
     }
 
-    
+    public int getCupoMaximo() {
+        return cupoMaximo;
+    }
+
+    public void setCupoMaximo(int cupoMaximo) {
+        this.cupoMaximo = cupoMaximo;
+    }
 }

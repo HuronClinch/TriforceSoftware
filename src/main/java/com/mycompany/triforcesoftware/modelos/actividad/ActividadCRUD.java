@@ -5,6 +5,7 @@
 package com.mycompany.triforcesoftware.modelos.actividad;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -16,117 +17,79 @@ import java.util.LinkedList;
  */
 public class ActividadCRUD {
 
-    private static final String CREAR = "INSERT INTO participante "
-            + "(codigo_actividad, codigo_evento, tipo_actividad, titulo_actividad, correo_electronico_ponente, hora_inicio, hora_fin) "
-            + "VALUES ('%s', '%s', '%s', '%s', '%s', '%s', '%s')";
+    private static final String CREAR = "INSERT INTO actividad "
+            + "(codigo_actividad, codigo_evento, tipo_actividad, titulo_actividad, correo_electronico_ponente, hora_inicio, hora_fin, cupo_maximo) "
+            + "VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
     private static final String LEER_TABLA = "SELECT * FROM actividad";
-    private static final String LEER = "SELECT * FROM actividad WHERE correo_electronico = '%s'";
-    private static final String ACTUALIZAR = "UPDATE participante SET "
-            + "codigo_evento = '%s', tipo_actividad = '%s', titulo_actividad = '%s', correo_electronico_ponente = '%s', hora_inicio = '%s', hora_fin = '%s' "
-            + "WHERE codigo_actividad = '%s'";
-    private static final String ELIMINAR = "DELETE FROM actividad WHERE codigo_actividad = '%s'";
 
-    public void crear(Connection connection, Actividad actividad) {//Crear una nueva actividad
+    public int crear(Connection connection, Actividad actividad) throws SQLException {//Crear una nueva actividad
+        PreparedStatement preparedStatement = null;
+        int rowsAffected = 0;
         try {
-            Statement insertStatement = connection.createStatement();
+            System.out.println(actividad.getCodigoActividad());
+            System.out.println(actividad.getCodigoEvento());
+            System.out.println(actividad.getTipoActividad());
+            System.out.println(actividad.getTipoActividad());
+            System.out.println(actividad.getTituloActividad());
+            System.out.println(actividad.getCorreoElectronicoPonente());
+            System.out.println(actividad.getHoraInicio());
+            System.out.println("" + actividad.getHoraFin());
+            System.out.println("" + actividad.getCupoMaximo());
+            preparedStatement = connection.prepareStatement(CREAR);
+            preparedStatement.setString(1, actividad.getCodigoActividad());
+            preparedStatement.setString(2, actividad.getCodigoEvento());
+            preparedStatement.setString(3, actividad.getTipoActividad());
+            preparedStatement.setString(4, actividad.getTituloActividad());
+            preparedStatement.setString(5, actividad.getCorreoElectronicoPonente());
+            preparedStatement.setTime(6, actividad.getHoraInicio());
+            preparedStatement.setTime(7, actividad.getHoraFin());
+            preparedStatement.setInt(8, actividad.getCupoMaximo());
 
-            String sql = String.format(CREAR,
-                    actividad.getCodigoActividad(),
-                    actividad.getCodigoEvento(),
-                    actividad.getTipoActividad(),
-                    actividad.getTituloActividad(),
-                    actividad.getCorreoElectronicoPonente(),
-                    actividad.getHoraInicio(),
-                    actividad.getHoraFin());//Formato para ingresar actividad
-
-            insertStatement.executeUpdate(sql);//Ingresar comando SQL
-            System.out.println("sql ejecutado (Actividad creada): " + sql);
+            rowsAffected = preparedStatement.executeUpdate();
         } catch (SQLException e) {
-            System.out.println("Hubo un error al guardar actividad");
-            e.printStackTrace();
-        }
-    }
-
-    public Actividad leer(Connection connection, String codigoActividad) {//Leer una actividad
-        Actividad actividad = null;//Crear una actividad vacia
-        try {
-            Statement insertStatement = connection.createStatement();
-            String sql = String.format(LEER, codigoActividad);//Formato para buscar actividad 
-            ResultSet datos = insertStatement.executeQuery(sql);//Ingresar comando SQL
-
-            if (datos.next()) {
-                actividad = new Actividad(
-                        datos.getString("codigo_actividad"),
-                        datos.getString("codigo_evento"),
-                        datos.getString("tipo_actividad"),
-                        datos.getString("titulo_actividad"),
-                        datos.getString("correo_electronico_ponente"),
-                        datos.getString("hora_inicio"),
-                        datos.getString("hora_fin"));
+            System.out.println("Hubo un error al guardar la actividad");
+            e.printStackTrace(System.out);
+        } finally {
+            if (preparedStatement != null) {
+                preparedStatement.close();
             }
-        } catch (SQLException e) {
-            System.out.println("Error al leer actividad");
-            e.printStackTrace();
         }
-        return actividad;
+        return rowsAffected;
     }
 
-    public LinkedList<Actividad> leerTodos(Connection connection) {//Obtener todas las actividades
+    public LinkedList<Actividad> leerTodos(Connection connection) throws SQLException {//Obtener todas las actividades
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
         LinkedList<Actividad> lista = new LinkedList<>();
+
         try {
-            Statement insertStatement = connection.createStatement();
-            ResultSet datos = insertStatement.executeQuery(LEER_TABLA);//Ingresar comando SQL
+            preparedStatement = connection.prepareStatement(LEER_TABLA);
+            resultSet = preparedStatement.executeQuery();
 
-            while (datos.next()) {
-                Actividad datosActividad = new Actividad(
-                        datos.getString("codigo_actividad"),
-                        datos.getString("codigo_evento"),
-                        datos.getString("tipo_actividad"),
-                        datos.getString("titulo_actividad"),
-                        datos.getString("correo_electronico_ponente"),
-                        datos.getString("hora_inicio"),
-                        datos.getString("hora_fin"));
-
-                lista.add(datosActividad);
+            while (resultSet.next()) {
+                Actividad actividad = new Actividad(
+                        resultSet.getString("codigo_actividad"),
+                        resultSet.getString("codigo_evento"),
+                        resultSet.getString("tipo_actividad"),
+                        resultSet.getString("titulo_actividad"),
+                        resultSet.getString("correo_electronico_ponente"),
+                        resultSet.getTime("hora_inicio"),
+                        resultSet.getTime("hora_fin"),
+                        resultSet.getInt("cupo_maximo")
+                );
+                lista.add(actividad);
             }
         } catch (SQLException e) {
-            System.out.println("Error al buscar todos las actividades");
-            e.printStackTrace();
+            System.out.println("Error al leer actividades");
+            e.printStackTrace(System.out);
+        } finally {
+            if (resultSet != null) {
+                resultSet.close();
+            }
+            if (preparedStatement != null) {
+                preparedStatement.close();
+            }
         }
         return lista;
-    }
-
-    public void actualizar(Connection connection, Actividad actividad) {//Actualizar a un actividad
-        try {
-            Statement insertStatement = connection.createStatement();
-
-            String sql = String.format(ACTUALIZAR,
-                    actividad.getCodigoEvento(),
-                    actividad.getTipoActividad(),
-                    actividad.getTituloActividad(),
-                    actividad.getCorreoElectronicoPonente(),
-                    actividad.getHoraInicio(),
-                    actividad.getHoraFin(),
-                    actividad.getCodigoActividad());//Formato para ingresar participante
-
-            insertStatement.executeUpdate(sql);//Ingresar comando SQL
-            System.out.println("sql ejecutado (Actividad actualizada):" + sql);
-        } catch (SQLException e) {
-            System.out.println("Hubo un error al actualizar actividad");
-            e.printStackTrace();
-        }
-    }
-
-    public void eliminar(Connection connection, String correo) {//Eliminar actividad
-        try {
-            Statement insertStatement = connection.createStatement();
-            String sql = String.format(ELIMINAR, correo);//Formato para eliminar actividad
-
-            insertStatement.executeUpdate(sql);//Ingresar comando SQL
-            System.out.println("sql ejecutado (Actividad eliminado):" + sql);
-        } catch (SQLException e) {
-            System.out.println("Hubo un error al eliminar actividad");
-            e.printStackTrace();
-        }
     }
 }

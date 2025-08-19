@@ -8,11 +8,14 @@ import com.mycompany.triforcesoftware.backend.evento.EventoBackend;
 import com.mycompany.triforcesoftware.backend.inscripcion.InscripcionBackend;
 import com.mycompany.triforcesoftware.backend.pago.PagoBackend;
 import com.mycompany.triforcesoftware.backend.participante.ParticipanteBackend;
+import com.mycompany.triforcesoftware.backend.registroactividad.RegistroActividadBackend;
+import com.mycompany.triforcesoftware.modelos.actividad.Actividad;
 import com.mycompany.triforcesoftware.modelos.asistencia.pagos.Pago;
 import com.mycompany.triforcesoftware.modelos.evento.Evento;
 import com.mycompany.triforcesoftware.modelos.inscripcion.Inscripcion;
 import com.mycompany.triforcesoftware.modelos.participante.Participante;
 import java.sql.SQLException;
+import java.sql.Time;
 import java.util.LinkedList;
 
 /**
@@ -38,8 +41,8 @@ public class ControladorCargarDatos {
                     registroPago(parametros);
 //                case "VALIDAR_INSCRIPCION" ->
 //                    validarInscripcion(parametros);
-//                case "REGISTRO_ACTIVIDAD" ->
-//                    registrarActividad(parametros);
+                case "REGISTRO_ACTIVIDAD" ->
+                    registrarActividad(parametros);
 //                case "ASISTENCIA" ->
 //                    registrarAsistencia(parametros);
 //                case "CERTIFICADO" ->
@@ -173,6 +176,33 @@ public class ControladorCargarDatos {
 
             PagoBackend ingresarPago = new PagoBackend();
             ingresarPago.datosValidos(pago);//Validar si los datos estan correctos para uns icnripcion hecha
+
+        } catch (NumberFormatException e) {
+            System.out.println("Error al convertir número/costo: ");
+            e.printStackTrace();
+        }
+    }
+
+    private void registrarActividad(String[] parametros) throws SQLException {//Registro pago de inscripcion evento
+        if (parametros.length != 8) {
+            System.out.println("Error: parámetros incorrectos para REGISTRO_EVENTO");
+            return;
+        }
+        try {
+            String codigoActividad = parametros[0];
+            String codigoEvento = parametros[1];
+            String tipoActividad = parametros[2];
+            String tituloActividad = parametros[3];
+            String correoElectronicoPonente = parametros[4];
+            Time horaInicio = Time.valueOf(parametros[5] + ":00");
+            Time horaFin = Time.valueOf(parametros[6] + ":00");
+            int cupoMaximo = Integer.parseInt(parametros[7]);
+
+            Actividad actividad = new Actividad(codigoActividad, codigoEvento, tipoActividad, tituloActividad, correoElectronicoPonente, horaInicio, horaFin, cupoMaximo);//Crear actividad
+
+            RegistroActividadBackend ingresarActividad = new RegistroActividadBackend();
+
+            ingresarActividad.datosValidos(actividad, false);//Validar si los datos estan correctos para uns icnripcion hecha
 
         } catch (NumberFormatException e) {
             System.out.println("Error al convertir número/costo: ");
