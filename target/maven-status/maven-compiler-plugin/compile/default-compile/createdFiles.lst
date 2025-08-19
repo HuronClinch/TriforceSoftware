@@ -15,6 +15,7 @@ com/mycompany/triforcesoftware/frontend/evento/EventoPanel.class
 com/mycompany/triforcesoftware/frontend/pago/PagoPanel$1.class
 com/mycompany/triforcesoftware/backend/inscripcion/InscripcionBackend.class
 com/mycompany/triforcesoftware/modelos/participante/Participante.class
+com/mycompany/triforcesoftware/modelos/validainscripcion/ValidarInscripcion.class
 com/mycompany/triforcesoftware/frontend/participante/ParticipantePanel.class
 com/mycompany/triforcesoftware/frontend/pago/PagoPanel.class
 com/mycompany/triforcesoftware/backend/evento/EventoBackend.class
@@ -30,6 +31,8 @@ com/mycompany/triforcesoftware/frontend/inscripcion/ParticipanteInscripcion.clas
 com/mycompany/triforcesoftware/backend/participante/ParticipanteBackend.class
 com/mycompany/triforcesoftware/modelos/evento/Evento.class
 com/mycompany/triforcesoftware/frontend/TriforcePanel$6.class
+com/mycompany/triforcesoftware/modelos/validainscripcion/ValidarInscripcionCRUD.class
+com/mycompany/triforcesoftware/controladores/ControladorValidaInscripcion.class
 com/mycompany/triforcesoftware/modelos/actividad/ActividadCRUD.class
 com/mycompany/triforcesoftware/modelos/inscripcion/InscripcionCRUD.class
 com/mycompany/triforcesoftware/frontend/cargarArchivo/CargarArchivo$1.class

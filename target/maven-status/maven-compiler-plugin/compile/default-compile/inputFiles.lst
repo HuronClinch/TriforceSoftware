@@ -12,6 +12,7 @@
 /home/huron_clinch/Documentos/Universidad/IPC2/TriforceSoftware/src/main/java/com/mycompany/triforcesoftware/controladores/ControladorInscripcion.java
 /home/huron_clinch/Documentos/Universidad/IPC2/TriforceSoftware/src/main/java/com/mycompany/triforcesoftware/controladores/ControladorPago.java
 /home/huron_clinch/Documentos/Universidad/IPC2/TriforceSoftware/src/main/java/com/mycompany/triforcesoftware/controladores/ControladorParticipante.java
+/home/huron_clinch/Documentos/Universidad/IPC2/TriforceSoftware/src/main/java/com/mycompany/triforcesoftware/controladores/ControladorValidaInscripcion.java
 /home/huron_clinch/Documentos/Universidad/IPC2/TriforceSoftware/src/main/java/com/mycompany/triforcesoftware/frontend/TriforcePanel.java
 /home/huron_clinch/Documentos/Universidad/IPC2/TriforceSoftware/src/main/java/com/mycompany/triforcesoftware/frontend/cargarArchivo/CargarArchivo.java
 /home/huron_clinch/Documentos/Universidad/IPC2/TriforceSoftware/src/main/java/com/mycompany/triforcesoftware/frontend/evento/EventoPanel.java
@@ -31,6 +32,8 @@
 /home/huron_clinch/Documentos/Universidad/IPC2/TriforceSoftware/src/main/java/com/mycompany/triforcesoftware/modelos/inscripcion/InscripcionCRUD.java
 /home/huron_clinch/Documentos/Universidad/IPC2/TriforceSoftware/src/main/java/com/mycompany/triforcesoftware/modelos/participante/Participante.java
 /home/huron_clinch/Documentos/Universidad/IPC2/TriforceSoftware/src/main/java/com/mycompany/triforcesoftware/modelos/participante/ParticipanteCRUD.java
+/home/huron_clinch/Documentos/Universidad/IPC2/TriforceSoftware/src/main/java/com/mycompany/triforcesoftware/modelos/validainscripcion/ValidarInscripcion.java
+/home/huron_clinch/Documentos/Universidad/IPC2/TriforceSoftware/src/main/java/com/mycompany/triforcesoftware/modelos/validainscripcion/ValidarInscripcionCRUD.java
 /home/huron_clinch/Documentos/Universidad/IPC2/TriforceSoftware/src/main/java/com/mycompany/triforcesoftware/utileria/ArchivoTexto.java
 /home/huron_clinch/Documentos/Universidad/IPC2/TriforceSoftware/src/main/java/com/mycompany/triforcesoftware/utileria/Connect.java
 /home/huron_clinch/Documentos/Universidad/IPC2/TriforceSoftware/src/main/java/com/mycompany/triforcesoftware/utileria/CrearBaseDatos.java
