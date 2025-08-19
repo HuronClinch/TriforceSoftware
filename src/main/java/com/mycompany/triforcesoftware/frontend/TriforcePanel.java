@@ -4,6 +4,7 @@
  */
 package com.mycompany.triforcesoftware.frontend;
 
+import com.mycompany.triforcesoftware.frontend.asistencia.AsistenciaPanel;
 import com.mycompany.triforcesoftware.frontend.cargarArchivo.CargarArchivo;
 import com.mycompany.triforcesoftware.frontend.evento.EventoPanel;
 import com.mycompany.triforcesoftware.frontend.inscripcion.ParticipanteInscripcion;
@@ -45,18 +46,18 @@ public class TriforcePanel extends javax.swing.JFrame {
         jDesktopPane1 = new javax.swing.JDesktopPane();
         jMenuBar1 = new javax.swing.JMenuBar();
         menuResgistroParticipante = new javax.swing.JMenu();
-        jMenuItem2 = new javax.swing.JMenuItem();
+        registroParticipante = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
-        MenuRegistroEvento = new javax.swing.JMenuItem();
-        jMenuItem5 = new javax.swing.JMenuItem();
-        jMenuItem6 = new javax.swing.JMenuItem();
+        menuRegistroEvento = new javax.swing.JMenuItem();
+        menuResgritoActividad = new javax.swing.JMenuItem();
+        menuRegistroAsistencia = new javax.swing.JMenuItem();
         jMenuItem7 = new javax.swing.JMenuItem();
         MenuRegistroIncripcionEvento = new javax.swing.JMenu();
-        jMenuItem3 = new javax.swing.JMenuItem();
-        jMenuItem4 = new javax.swing.JMenuItem();
+        menuInscripcionEvento = new javax.swing.JMenuItem();
+        menuPago = new javax.swing.JMenuItem();
         jMenu7 = new javax.swing.JMenu();
         jMenu1 = new javax.swing.JMenu();
-        jMenuItem1 = new javax.swing.JMenuItem();
+        menuCargarArchivo = new javax.swing.JMenuItem();
 
         jMenu3.setText("File");
         jMenuBar2.add(jMenu3);
@@ -81,36 +82,41 @@ public class TriforcePanel extends javax.swing.JFrame {
 
         menuResgistroParticipante.setText("Participamnte");
 
-        jMenuItem2.setText("Registrar Participante");
-        jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
+        registroParticipante.setText("Registrar Participante");
+        registroParticipante.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem2ActionPerformed(evt);
+                registroParticipanteActionPerformed(evt);
             }
         });
-        menuResgistroParticipante.add(jMenuItem2);
+        menuResgistroParticipante.add(registroParticipante);
 
         jMenuBar1.add(menuResgistroParticipante);
 
         jMenu2.setText("Evento");
 
-        MenuRegistroEvento.setText("Registro evento");
-        MenuRegistroEvento.addActionListener(new java.awt.event.ActionListener() {
+        menuRegistroEvento.setText("Registro evento");
+        menuRegistroEvento.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                MenuRegistroEventoActionPerformed(evt);
+                menuRegistroEventoActionPerformed(evt);
             }
         });
-        jMenu2.add(MenuRegistroEvento);
+        jMenu2.add(menuRegistroEvento);
 
-        jMenuItem5.setText("Registrar Actividad");
-        jMenuItem5.addActionListener(new java.awt.event.ActionListener() {
+        menuResgritoActividad.setText("Registrar Actividad");
+        menuResgritoActividad.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem5ActionPerformed(evt);
+                menuResgritoActividadActionPerformed(evt);
             }
         });
-        jMenu2.add(jMenuItem5);
+        jMenu2.add(menuResgritoActividad);
 
-        jMenuItem6.setText("Registrar Asistencia");
-        jMenu2.add(jMenuItem6);
+        menuRegistroAsistencia.setText("Registrar Asistencia");
+        menuRegistroAsistencia.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuRegistroAsistenciaActionPerformed(evt);
+            }
+        });
+        jMenu2.add(menuRegistroAsistencia);
 
         jMenuItem7.setText("Certificado");
         jMenu2.add(jMenuItem7);
@@ -119,21 +125,21 @@ public class TriforcePanel extends javax.swing.JFrame {
 
         MenuRegistroIncripcionEvento.setText("Inscripcion");
 
-        jMenuItem3.setText("Inscripcion a evento");
-        jMenuItem3.addActionListener(new java.awt.event.ActionListener() {
+        menuInscripcionEvento.setText("Inscripcion a evento");
+        menuInscripcionEvento.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem3ActionPerformed(evt);
+                menuInscripcionEventoActionPerformed(evt);
             }
         });
-        MenuRegistroIncripcionEvento.add(jMenuItem3);
+        MenuRegistroIncripcionEvento.add(menuInscripcionEvento);
 
-        jMenuItem4.setText("Pago");
-        jMenuItem4.addActionListener(new java.awt.event.ActionListener() {
+        menuPago.setText("Pago");
+        menuPago.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem4ActionPerformed(evt);
+                menuPagoActionPerformed(evt);
             }
         });
-        MenuRegistroIncripcionEvento.add(jMenuItem4);
+        MenuRegistroIncripcionEvento.add(menuPago);
 
         jMenuBar1.add(MenuRegistroIncripcionEvento);
 
@@ -142,13 +148,13 @@ public class TriforcePanel extends javax.swing.JFrame {
 
         jMenu1.setText("Cargar archivo");
 
-        jMenuItem1.setText("Cargar");
-        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+        menuCargarArchivo.setText("Cargar");
+        menuCargarArchivo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem1ActionPerformed(evt);
+                menuCargarArchivoActionPerformed(evt);
             }
         });
-        jMenu1.add(jMenuItem1);
+        jMenu1.add(menuCargarArchivo);
 
         jMenuBar1.add(jMenu1);
 
@@ -170,18 +176,20 @@ public class TriforcePanel extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void MenuRegistroEventoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MenuRegistroEventoActionPerformed
+    private void menuRegistroEventoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuRegistroEventoActionPerformed
+        repintarJDesktop();
         EventoPanel panel = new EventoPanel();
         jDesktopPane1.add(panel).setVisible(true);
-    }//GEN-LAST:event_MenuRegistroEventoActionPerformed
+    }//GEN-LAST:event_menuRegistroEventoActionPerformed
 
-    private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
+    private void registroParticipanteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_registroParticipanteActionPerformed
+        repintarJDesktop();
         ParticipantePanel panel = new ParticipantePanel();
         jDesktopPane1.add(panel).setVisible(true);
+    }//GEN-LAST:event_registroParticipanteActionPerformed
 
-    }//GEN-LAST:event_jMenuItem2ActionPerformed
-
-    private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
+    private void menuInscripcionEventoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuInscripcionEventoActionPerformed
+        repintarJDesktop();
         try {
             ParticipanteInscripcion panel = new ParticipanteInscripcion();
             jDesktopPane1.add(panel).setVisible(true);
@@ -189,9 +197,10 @@ public class TriforcePanel extends javax.swing.JFrame {
             System.out.println("Error al ingresar a menu inscripcion");
             e.printStackTrace(System.out);
         }
-    }//GEN-LAST:event_jMenuItem3ActionPerformed
+    }//GEN-LAST:event_menuInscripcionEventoActionPerformed
 
-    private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
+    private void menuPagoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuPagoActionPerformed
+        repintarJDesktop();
         try {
             PagoPanel panel = new PagoPanel();
             jDesktopPane1.add(panel).setVisible(true);
@@ -199,21 +208,31 @@ public class TriforcePanel extends javax.swing.JFrame {
             System.out.println("Error al ingresar a menu pago");
             e.printStackTrace(System.out);
         }
-    }//GEN-LAST:event_jMenuItem4ActionPerformed
+    }//GEN-LAST:event_menuPagoActionPerformed
 
-    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+    private void menuCargarArchivoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuCargarArchivoActionPerformed
+        repintarJDesktop();
         CargarArchivo panel = new CargarArchivo();
         jDesktopPane1.add(panel).setVisible(true);
-    }//GEN-LAST:event_jMenuItem1ActionPerformed
+    }//GEN-LAST:event_menuCargarArchivoActionPerformed
 
-    private void jMenuItem5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem5ActionPerformed
+    private void menuResgritoActividadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuResgritoActividadActionPerformed
+        repintarJDesktop();
         RegistroActividadPanel panel = new RegistroActividadPanel();
         jDesktopPane1.add(panel).setVisible(true);
-    }//GEN-LAST:event_jMenuItem5ActionPerformed
+    }//GEN-LAST:event_menuResgritoActividadActionPerformed
 
+    private void menuRegistroAsistenciaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuRegistroAsistenciaActionPerformed
+        repintarJDesktop();
+        AsistenciaPanel panel = new AsistenciaPanel();
+        jDesktopPane1.add(panel).setVisible(true);
+    }//GEN-LAST:event_menuRegistroAsistenciaActionPerformed
 
+    private void repintarJDesktop() {
+        jDesktopPane1.removeAll();
+        jDesktopPane1.repaint();
+    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JMenuItem MenuRegistroEvento;
     private javax.swing.JMenu MenuRegistroIncripcionEvento;
     private javax.swing.JDesktopPane jDesktopPane1;
     private javax.swing.JMenu jMenu1;
@@ -224,13 +243,14 @@ public class TriforcePanel extends javax.swing.JFrame {
     private javax.swing.JMenu jMenu7;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuBar jMenuBar2;
-    private javax.swing.JMenuItem jMenuItem1;
-    private javax.swing.JMenuItem jMenuItem2;
-    private javax.swing.JMenuItem jMenuItem3;
-    private javax.swing.JMenuItem jMenuItem4;
-    private javax.swing.JMenuItem jMenuItem5;
-    private javax.swing.JMenuItem jMenuItem6;
     private javax.swing.JMenuItem jMenuItem7;
+    private javax.swing.JMenuItem menuCargarArchivo;
+    private javax.swing.JMenuItem menuInscripcionEvento;
+    private javax.swing.JMenuItem menuPago;
+    private javax.swing.JMenuItem menuRegistroAsistencia;
+    private javax.swing.JMenuItem menuRegistroEvento;
     private javax.swing.JMenu menuResgistroParticipante;
+    private javax.swing.JMenuItem menuResgritoActividad;
+    private javax.swing.JMenuItem registroParticipante;
     // End of variables declaration//GEN-END:variables
 }

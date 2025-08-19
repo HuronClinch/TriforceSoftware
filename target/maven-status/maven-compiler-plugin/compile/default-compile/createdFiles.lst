@@ -1,6 +1,7 @@
 com/mycompany/triforcesoftware/frontend/pago/PagoPanel$4.class
 com/mycompany/triforcesoftware/backend/registroactividad/RegistroActividadBackend.class
 com/mycompany/triforcesoftware/frontend/registroActividad/RegistroActividadPanel.class
+com/mycompany/triforcesoftware/frontend/asistencia/AsistenciaPanel$2.class
 com/mycompany/triforcesoftware/controladores/ControladorEvento.class
 com/mycompany/triforcesoftware/Atajos.class
 com/mycompany/triforcesoftware/frontend/participante/ParticipantePanel$1.class
@@ -9,6 +10,7 @@ com/mycompany/triforcesoftware/controladores/ControladorParticipante.class
 com/mycompany/triforcesoftware/frontend/registroActividad/RegistroActividadPanel$1.class
 com/mycompany/triforcesoftware/modelos/asistencia/AsistenciaCRUD.class
 com/mycompany/triforcesoftware/frontend/TriforcePanel$4.class
+com/mycompany/triforcesoftware/backend/asistencia/AsistenciaBackend.class
 com/mycompany/triforcesoftware/modelos/asistencia/Asistencia.class
 com/mycompany/triforcesoftware/frontend/pago/PagoPanel$5.class
 com/mycompany/triforcesoftware/frontend/evento/EventoPanel.class
@@ -29,9 +31,12 @@ com/mycompany/triforcesoftware/controladores/ControladorCargarDatos.class
 com/mycompany/triforcesoftware/frontend/pago/PagoPanel$2.class
 com/mycompany/triforcesoftware/frontend/inscripcion/ParticipanteInscripcion.class
 com/mycompany/triforcesoftware/backend/participante/ParticipanteBackend.class
+com/mycompany/triforcesoftware/frontend/TriforcePanel$7.class
 com/mycompany/triforcesoftware/modelos/evento/Evento.class
 com/mycompany/triforcesoftware/frontend/TriforcePanel$6.class
+com/mycompany/triforcesoftware/frontend/asistencia/AsistenciaPanel.class
 com/mycompany/triforcesoftware/modelos/validainscripcion/ValidarInscripcionCRUD.class
+com/mycompany/triforcesoftware/frontend/asistencia/AsistenciaPanel$1.class
 com/mycompany/triforcesoftware/controladores/ControladorValidaInscripcion.class
 com/mycompany/triforcesoftware/modelos/actividad/ActividadCRUD.class
 com/mycompany/triforcesoftware/modelos/inscripcion/InscripcionCRUD.class
@@ -42,10 +47,12 @@ com/mycompany/triforcesoftware/frontend/pago/PagoPanel$3.class
 com/mycompany/triforcesoftware/utileria/ArchivoTexto.class
 com/mycompany/triforcesoftware/backend/TriforceBackend.class
 com/mycompany/triforcesoftware/backend/pago/PagoBackend.class
+com/mycompany/triforcesoftware/frontend/asistencia/AsistenciaPanel$3.class
 com/mycompany/triforcesoftware/frontend/TriforcePanel$2.class
 com/mycompany/triforcesoftware/frontend/TriforcePanel.class
 com/mycompany/triforcesoftware/utileria/Connect.class
 com/mycompany/triforcesoftware/controladores/ControladorActividad.class
+com/mycompany/triforcesoftware/controladores/ContoladorAsistencia.class
 com/mycompany/triforcesoftware/modelos/actividad/Actividad.class
 com/mycompany/triforcesoftware/frontend/evento/EventoPanel$1.class
 com/mycompany/triforcesoftware/utileria/CrearBaseDatos.class
