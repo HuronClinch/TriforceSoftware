@@ -4,12 +4,14 @@
  */
 package com.mycompany.triforcesoftware.controladores;
 
+import com.mycompany.triforcesoftware.backend.asistencia.AsistenciaBackend;
 import com.mycompany.triforcesoftware.backend.evento.EventoBackend;
 import com.mycompany.triforcesoftware.backend.inscripcion.InscripcionBackend;
 import com.mycompany.triforcesoftware.backend.pago.PagoBackend;
 import com.mycompany.triforcesoftware.backend.participante.ParticipanteBackend;
 import com.mycompany.triforcesoftware.backend.registroactividad.RegistroActividadBackend;
 import com.mycompany.triforcesoftware.modelos.actividad.Actividad;
+import com.mycompany.triforcesoftware.modelos.asistencia.Asistencia;
 import com.mycompany.triforcesoftware.modelos.asistencia.pagos.Pago;
 import com.mycompany.triforcesoftware.modelos.evento.Evento;
 import com.mycompany.triforcesoftware.modelos.inscripcion.Inscripcion;
@@ -43,8 +45,8 @@ public class ControladorCargarDatos {
 //                    validarInscripcion(parametros);
                 case "REGISTRO_ACTIVIDAD" ->
                     registrarActividad(parametros);
-//                case "ASISTENCIA" ->
-//                    registrarAsistencia(parametros);
+                case "ASISTENCIA" ->
+                    registroAsistencia(parametros);
 //                case "CERTIFICADO" ->
 //                    registrarCertificado(parametros);
 //                case "REPORTE_PARTICIPANTES" ->
@@ -203,6 +205,27 @@ public class ControladorCargarDatos {
             RegistroActividadBackend ingresarActividad = new RegistroActividadBackend();
 
             ingresarActividad.datosValidos(actividad, false);//Validar si los datos estan correctos para uns icnripcion hecha
+
+        } catch (NumberFormatException e) {
+            System.out.println("Error al convertir número/costo: ");
+            e.printStackTrace();
+        }
+    }
+
+    private void registroAsistencia(String[] parametros) throws SQLException {//Registro pago de inscripcion evento
+        if (parametros.length != 2) {
+            System.out.println("Error: parámetros incorrectos para REGISTRO_EVENTO");
+            return;
+        }
+        try {
+            String correoElectronico = parametros[0];
+            String codigoActividad = parametros[1];
+
+            Asistencia asistencia = new Asistencia(correoElectronico, codigoActividad);//Crear actividad
+
+            AsistenciaBackend ingresarAsistencia = new AsistenciaBackend();
+
+            ingresarAsistencia.datosValidos(asistencia);//Validar si los datos estan correctos para ingresar una asistencia
 
         } catch (NumberFormatException e) {
             System.out.println("Error al convertir número/costo: ");

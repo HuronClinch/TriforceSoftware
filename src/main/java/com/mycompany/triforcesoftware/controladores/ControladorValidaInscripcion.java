@@ -22,11 +22,16 @@ public class ControladorValidaInscripcion {
     private final ValidarInscripcionCRUD CRUD;
     private LinkedList<ValidarInscripcion> lista;
 
-    public ControladorValidaInscripcion() throws SQLException {
+    public ControladorValidaInscripcion() {
         Connect conceccion = new Connect();
         CONNECTION = conceccion.connect();//Crear conceccion con base de datos 
         CRUD = new ValidarInscripcionCRUD();//
-        listadoEventos();//Obtener el listado de las validaciones creadas
+        try {
+            listadoEventos();//Obtener el listado de las validaciones creadas
+        } catch (SQLException e) {
+            System.out.println("Error al lisatr validacion inscripcion");
+            e.printStackTrace(System.out);
+        }
     }
 
     public boolean nuevoEvento(ValidarInscripcion validarInscripcion) {//Crear validacion

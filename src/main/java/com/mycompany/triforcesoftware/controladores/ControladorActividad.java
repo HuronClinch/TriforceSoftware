@@ -21,11 +21,16 @@ public class ControladorActividad {
     private final ActividadCRUD CRUD;
     private LinkedList<Actividad> lista;
 
-    public ControladorActividad() throws SQLException {
+    public ControladorActividad() {
         Connect conceccion = new Connect();
         CONNECTION = conceccion.connect();//Crear conceccion con base de datos 
         CRUD = new ActividadCRUD();//
-        listadoEventos();//Obtener el listado de las actividades creadas
+        try {
+            listadoEventos();//Obtener el listado de las actividades creadas
+        } catch (SQLException e) {
+            System.out.println("Error en lista ContoladorAsistencia");
+            e.printStackTrace(System.out);
+        }
     }
 
     public boolean nuevaActividad(Actividad actividad) {//Crear participante
