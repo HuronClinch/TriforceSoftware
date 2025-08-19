@@ -33,9 +33,6 @@ public class Connect {
                 connection = DriverManager.getConnection(URL, USER_NAME, PASSWORD);
                 CrearBaseDatos crearDataBase = new CrearBaseDatos();
                 crearDataBase.crearDataBase(connection);
-                System.out.println("Se creo la coneccion correctamente");
-                System.out.println("Esquema: " + connection.getSchema());
-                System.out.println("Catalogo: " + connection.getCatalog());
             }
             return connection;
         } catch (SQLException e) {//Manejar excepcion

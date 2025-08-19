@@ -66,7 +66,7 @@ public class CrearBaseDatos {
             preparedStatement.executeUpdate(crearPago);
 
             String crearActividad = "CREATE TABLE IF NOT EXISTS actividad ("
-                    + "codigo_actividad VARCHAR(10) NOT NULL,"
+                    + "codigo_actividad VARCHAR(12) NOT NULL,"
                     + "codigo_evento VARCHAR(12) NOT NULL,"
                     + "tipo_actividad VARCHAR(10) NOT NULL,"
                     + "titulo_actividad VARCHAR(200) NOT NULL,"
@@ -81,12 +81,23 @@ public class CrearBaseDatos {
 
             String crearAsistencia = "CREATE TABLE IF NOT EXISTS asistencia ("
                     + "correo_electronico VARCHAR(100) NOT NULL,"
-                    + "codigo_actividad VARCHAR(10) NOT NULL,"
+                    + "codigo_actividad VARCHAR(12) NOT NULL,"
                     + "PRIMARY KEY (correo_electronico, codigo_actividad),"
                     + "FOREIGN KEY (correo_electronico) REFERENCES participante(correo_electronico),"
                     + "FOREIGN KEY (codigo_actividad) REFERENCES actividad(codigo_actividad)"
                     + ")";
             preparedStatement.executeUpdate(crearAsistencia);
+
+            String crearValidacionInscripcion = "CREATE TABLE IF NOT EXISTS validar_inscripcion ("
+                    + "correo_electronico VARCHAR(100) NOT NULL,"
+                    + "codigo_evento VARCHAR(12) NOT NULL,"
+                    + "PRIMARY KEY (correo_electronico, codigo_evento),"
+                    + "FOREIGN KEY (correo_electronico, codigo_evento) "
+                    + "REFERENCES inscripcion(correo_electronico, codigo_evento) "
+                    + "ON DELETE CASCADE "
+                    + "ON UPDATE CASCADE"
+                    + ")";
+            preparedStatement.executeUpdate(crearValidacionInscripcion);
 
             System.out.println("✅Base de datos creado correctamente");
 
